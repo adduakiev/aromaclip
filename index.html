@@ -123,6 +123,10 @@
       overflow: hidden;
     }
 
+    .my-spin-wheel.is-spinning {
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.5);
+    }
+
     .my-spin-wheel::after {
       content: "SPIN";
       position: absolute;
@@ -233,6 +237,14 @@
       line-height: 1.6;
       color: #3a2b21;
       min-height: 40px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .my-spin-result.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .my-spin-result strong {
@@ -248,6 +260,29 @@
 
     .my-spin-result a:hover {
       text-decoration-thickness: 2px;
+    }
+
+    .my-spin-debug-btn {
+      margin-top: 6px;
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px dashed rgba(59, 21, 21, 0.35);
+      background: rgba(255, 255, 255, 0.85);
+      color: #8a6a3c;
+      padding: 4px 10px;
+      cursor: pointer;
+      display: none;
+    }
+
+    .my-spin-debug-btn.visible {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .my-spin-debug-btn::before {
+      content: "⚙️";
+      font-size: 12px;
     }
 
     .my-spin-howto {
@@ -273,6 +308,36 @@
 
     .my-spin-howto li {
       margin-bottom: 4px;
+    }
+
+    /* Феєрверк */
+    .my-fireworks {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9999;
+    }
+
+    .my-fireworks-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #ffd27a 40%, #ff7b7b 100%);
+      opacity: 0;
+      animation: myFirework 700ms ease-out forwards;
+    }
+
+    @keyframes myFirework {
+      0% {
+        transform: translate(0, 0) scale(0.4);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) scale(1);
+        opacity: 0;
+      }
     }
 
     @media (max-width: 768px) {
@@ -331,6 +396,9 @@
             </div>
 
             <div class="my-spin-result" id="my-spin-result"></div>
+            <button id="my-spin-debug" class="my-spin-debug-btn" type="button">
+              Debug: скинути ліміт на сьогодні
+            </button>
           </div>
 
           <div class="my-spin-howto">
@@ -352,8 +420,12 @@
       const wheel = document.getElementById("my-spin-wheel");
       const spinBtn = document.getElementById("my-spin-button");
       const resultBox = document.getElementById("my-spin-result");
+      const debugBtn = document.getElementById("my-spin-debug");
 
       if (!wheel || !spinBtn || !resultBox) return;
+
+      // 🔧 DEBUG MODE: коли закінчиш тестувати — постав FALSE
+      const DEBUG_MODE = true;
 
       // 🔗 Сторінка з акціями МʼЯСТОРІЯ
       const discountPageUrl = "https://myastoriya.com.ua/ua/"; 
@@ -386,32 +458,44 @@
         spinBtn.disabled = true;
       }
 
+      function setResultHtml(html) {
+        resultBox.classList.remove("visible");
+        // перезапуск анімації
+        void resultBox.offsetWidth;
+        resultBox.innerHTML = html;
+        resultBox.classList.add("visible");
+      }
+
       function showCouponResult() {
-        resultBox.innerHTML =
+        setResultHtml(
           "<strong>Ваш приз:</strong> купон на знижку!<br>" +
           "Перейдіть на сторінку з актуальними пропозиціями: " +
           '<a href="' +
           discountPageUrl +
-          '" target="_blank" rel="noopener">перейти до знижок</a>.';
+          '" target="_blank" rel="noopener">перейти до знижок</a>.'
+        );
       }
 
       function show20Result() {
-        resultBox.innerHTML =
+        setResultHtml(
           "<strong>Ваш приз:</strong> -20% на всю продукцію МʼЯСТОРІЯ!<br>" +
           'Використайте промокод: <strong style="letter-spacing:0.12em;">20BF200</strong> ' +
-          "при оформленні замовлення.";
+          "при оформленні замовлення."
+        );
       }
 
       function showDinnerResult() {
-        resultBox.innerHTML =
+        setResultHtml(
           "<strong>Джекпот!</strong> Ви виграли вечерю в ресторані МʼЯСТОРІЯ на двох " +
           "номіналом <strong>2000 ₴</strong>.<br>" +
-          "Наш менеджер звʼяжеться з вами для підтвердження призу або напишіть нам у чат підтримки.";
+          "Наш менеджер звʼяжеться з вами для підтвердження призу або напишіть нам у чат підтримки."
+        );
       }
 
       function showLimitMessage() {
-        resultBox.textContent =
-          "Сьогодні ви вже крутили колесо. Поверніться завтра — подарунки ще будуть.";
+        setResultHtml(
+          "Сьогодні ви вже крутили колесо. Поверніться завтра — подарунки ще будуть."
+        );
       }
 
       function restoreTodayState() {
@@ -435,6 +519,41 @@
         }
       }
 
+      // 🎇 Феєрверк
+      function triggerFireworks() {
+        const container = document.createElement("div");
+        container.className = "my-fireworks";
+        const dots = 40;
+
+        for (let i = 0; i < dots; i++) {
+          const dot = document.createElement("span");
+          dot.className = "my-fireworks-dot";
+
+          const angle = Math.random() * Math.PI * 2;
+          const radius = 80 + Math.random() * 80;
+          const dx = Math.cos(angle) * radius;
+          const dy = Math.sin(angle) * radius;
+
+          dot.style.setProperty("--dx", dx + "px");
+          dot.style.setProperty("--dy", dy + "px");
+
+          const left = 50 + Math.cos(angle) * 10;
+          const top = 30 + Math.sin(angle) * 10;
+          dot.style.left = left + "%";
+          dot.style.top = top + "%";
+
+          dot.style.animationDelay = (Math.random() * 0.25).toFixed(2) + "s";
+
+          container.appendChild(dot);
+        }
+
+        document.body.appendChild(container);
+
+        setTimeout(function () {
+          container.remove();
+        }, 1200);
+      }
+
       // 🎲 Розподіл шансів:
       // 0.00–0.85  -> купон (85%)
       // 0.85–0.99  -> 20% на все (14%)
@@ -449,14 +568,17 @@
       function spinWheel() {
         if (isSpinning) return;
 
-        if (alreadySpunToday()) {
+        if (!DEBUG_MODE && alreadySpunToday()) {
           showLimitMessage();
           spinBtn.disabled = true;
           return;
         }
 
         isSpinning = true;
-        resultBox.textContent = "Крутимо колесо…";
+        spinBtn.disabled = true;
+        spinBtn.classList.add("is-spinning");
+        wheel.classList.add("is-spinning");
+        setResultHtml("Крутимо колесо…");
 
         const extraSpins = 4;
         const randomDeg = Math.floor(Math.random() * 360);
@@ -467,7 +589,15 @@
 
         setTimeout(function () {
           isSpinning = false;
-          lockForToday(prizeCode);
+          spinBtn.classList.remove("is-spinning");
+          wheel.classList.remove("is-spinning");
+
+          if (!DEBUG_MODE) {
+            lockForToday(prizeCode);
+          } else {
+            // у debug режимі не фіксуємо в localStorage, щоб можна було крутити
+            spinBtn.disabled = false;
+          }
 
           if (prizeCode === "coupon") {
             showCouponResult();
@@ -476,11 +606,33 @@
           } else {
             showDinnerResult();
           }
+
+          triggerFireworks();
         }, 4100);
       }
 
       spinBtn.addEventListener("click", spinWheel);
-      restoreTodayState();
+
+      // DEBUG-кнопка: скинути ліміт на сьогодні
+      if (DEBUG_MODE && debugBtn) {
+        debugBtn.classList.add("visible");
+        debugBtn.addEventListener("click", function () {
+          try {
+            localStorage.removeItem(LS_DATE_KEY);
+            localStorage.removeItem(LS_PRIZE_KEY);
+          } catch (e) {}
+          spinBtn.disabled = false;
+          setResultHtml("Debug: ліміт на сьогодні скинуто, можна крутити ще раз.");
+        });
+      } else if (debugBtn) {
+        // На продакшені кнопка взагалі не показується
+        debugBtn.remove();
+      }
+
+      // Відновити стан, якщо користувач вже крутив сьогодні (тільки якщо не debug)
+      if (!DEBUG_MODE) {
+        restoreTodayState();
+      }
     });
   </script>
 </body>
