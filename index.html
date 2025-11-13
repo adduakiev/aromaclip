@@ -2,153 +2,181 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <title>Колесо фортуни МʼЯСТОРІЯ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Колесо фортуни «Мʼясторія»</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифт у стилі e-commerce (під Мʼясторію) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
+      /* Брендові кольори під Мʼясторію (теплий беж + бордо + золото) */
+      --my-bg: #f6f1ea;
+      --my-bg-soft: #fbf6ef;
       --my-primary: #7b2626;
       --my-primary-dark: #3b1515;
-      --my-accent: #f6eee2;
-      --my-gold: #c39b4a;
-      --my-text-dark: #1f1a18;
+      --my-primary-soft: #f3e2da;
+      --my-gold: #c59b47;
+      --my-text: #241814;
+      --my-muted: #7a6f66;
+      --my-border-soft: rgba(0, 0, 0, 0.06);
+
+      --wheel-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
       margin: 0;
       padding: 0;
-      background: radial-gradient(circle at top, #fdf7ef 0, #f3e2cf 40%, #f7efe4 100%);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--my-text-dark);
-    }
-
-    .my-spin-page {
-      padding: 24px 12px 32px;
       min-height: 100vh;
-      box-sizing: border-box;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #fff 0, var(--my-bg-soft) 55%, var(--my-bg) 100%);
+      color: var(--my-text);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .my-spin-container {
-      max-width: 1040px;
+    .page-shell {
       width: 100%;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 24px;
-      border: 1px solid rgba(59, 21, 21, 0.12);
-      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.18);
-      padding: 24px 22px 26px;
-      box-sizing: border-box;
+      max-width: 1200px;
+      padding: 32px 16px;
     }
 
-    .my-spin-header-page {
-      text-align: left;
-      margin-bottom: 22px;
-    }
-
-    .my-spin-tag {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 600;
-      background: rgba(123, 38, 38, 0.09);
-      color: var(--my-primary-dark);
-      margin-bottom: 10px;
-    }
-
-    .my-spin-header-page h1 {
-      margin: 0 0 8px;
-      font-size: clamp(22px, 3.4vw, 30px);
-      line-height: 1.25;
-      font-weight: 800;
-      color: var(--my-primary-dark);
-    }
-
-    .my-spin-header-page p {
-      margin: 0 0 6px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #47352a;
-    }
-
-    .my-spin-subnote {
-      font-size: 13px;
-      color: #5c4738;
-      margin: 8px 0 0;
-    }
-
-    .my-spin-body-page {
+    .spin-layout {
       display: grid;
-      grid-template-columns: minmax(0, 320px) minmax(0, 1.4fr);
-      gap: 20px;
-      align-items: flex-start;
-      margin-top: 16px;
-    }
-
-    .my-spin-wheel-wrapper {
-      position: relative;
-      width: 260px;
-      height: 260px;
-      margin: 0 auto;
-    }
-
-    .my-spin-wheel {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 10px solid var(--my-primary-dark);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-      background:
-        conic-gradient(
-          #fdf6ec 0deg 45deg,
-          #f1e0cf 45deg 90deg,
-          #fdf6ec 90deg 135deg,
-          #f1e0cf 135deg 180deg,
-          #fdf6ec 180deg 225deg,
-          #f1e0cf 225deg 270deg,
-          #fdf6ec 270deg 315deg,
-          #f1e0cf 315deg 360deg
-        );
-      display: flex;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 28px;
       align-items: center;
-      justify-content: center;
+    }
+
+    @media (max-width: 900px) {
+      .spin-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .spin-card {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 24px;
+      padding: 28px 26px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--my-border-soft);
       position: relative;
-      transition: transform 4s cubic-bezier(0.13, 0.82, 0.13, 1);
-      transform: rotate(var(--spin-rotation, 0deg));
       overflow: hidden;
     }
 
-    .my-spin-wheel.is-spinning {
-      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.5);
+    .spin-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 55%);
+      opacity: 0.55;
+      pointer-events: none;
     }
 
-    .my-spin-wheel::after {
-      content: "SPIN";
-      position: absolute;
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #ffffff 0, #f5e0cf 45%, #f0d2bc 100%);
-      border: 3px solid var(--my-primary-dark);
+    .spin-card-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 16px;
+    }
+
+    .spin-tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(123, 38, 38, 0.08);
+      color: var(--my-primary);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .spin-tagline-icon {
+      font-size: 14px;
+    }
+
+    .spin-title {
+      margin: 12px 0 4px;
+      font-size: clamp(24px, 3.1vw, 30px);
+      line-height: 1.15;
+      font-weight: 800;
+      color: var(--my-primary-dark);
+    }
+
+    .spin-subtitle {
+      margin: 0;
+      font-size: 14px;
+      color: var(--my-muted);
+      max-width: 480px;
+    }
+
+    .probabilities {
+      position: relative;
+      z-index: 1;
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(246, 241, 234, 0.95);
+      border: 1px dashed rgba(123, 38, 38, 0.2);
+      font-size: 11px;
+      color: var(--my-muted);
+    }
+
+    .probabilities strong {
+      color: var(--my-primary-dark);
+    }
+
+    .prob-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .prob-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--my-primary);
+      flex-shrink: 0;
+    }
+
+    .prob-dot.gold {
+      background: var(--my-gold);
+    }
+
+    /* Блок колеса */
+    .wheel-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 1;
+    }
+
+    .wheel-shell {
+      position: relative;
+      width: min(380px, 90vw);
+      aspect-ratio: 1 / 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 17px;
-      letter-spacing: 0.12em;
-      color: var(--my-primary-dark);
-      text-transform: uppercase;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
 
-    .my-spin-pointer {
+    .wheel-pointer {
       position: absolute;
-      top: -8px;
+      top: -6px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
@@ -156,286 +184,750 @@
       border-left: 16px solid transparent;
       border-right: 16px solid transparent;
       border-bottom: 26px solid var(--my-gold);
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
       z-index: 3;
     }
 
-    /* Бейдж виграшу */
-    .my-win-badge {
+    .wheel-pointer::after {
+      content: "";
       position: absolute;
-      top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.7);
-      background: radial-gradient(circle at 30% 20%, #fffbe8 0, #ffe38a 40%, #ffb347 100%);
-      border-radius: 999px;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border: 2px solid rgba(128, 46, 0, 0.8);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 4;
-    }
-
-    .my-win-badge.visible {
-      animation: myWinPop 450ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
-    }
-
-    .my-win-icon {
-      width: 32px;
-      height: 32px;
+      bottom: -14px;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #fff 0, #ffe9b5 45%, #ff9f6b 100%);
+      background: #fff;
+      border: 3px solid var(--my-primary-dark);
+    }
+
+    .wheel-base {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #fff 0, #fdf5ee 35%, #f1ddd1 70%, #e9c9b6 100%);
+      box-shadow: var(--wheel-shadow);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      overflow: hidden;
     }
 
-    .my-win-label {
-      font-size: 14px;
-      font-weight: 800;
+    .wheel-ring {
+      position: relative;
+      width: 86%;
+      height: 86%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, #fefefe 0, #fff 34%, #f5e7dd 35%, #f5e7dd 40%, transparent 41%),
+        conic-gradient(
+          var(--my-primary) 0deg 60deg,
+          var(--my-primary-soft) 60deg 120deg,
+          var(--my-gold) 120deg 180deg,
+          var(--my-primary) 180deg 240deg,
+          var(--my-primary-soft) 240deg 300deg,
+          var(--my-gold) 300deg 360deg
+        );
+      border: 6px solid #fff;
+      box-shadow:
+        inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+        0 0 0 3px rgba(255, 255, 255, 0.9);
+      transition: transform 4s cubic-bezier(0.19, 0.9, 0.21, 1.02);
+    }
+
+    .wheel-center {
+      position: absolute;
+      width: 32%;
+      height: 32%;
+      border-radius: 50%;
+      background: radial-gradient(circle at top, #ffffff 0, #fff7f3 45%, #f0d2c1 100%);
+      border: 4px solid #fff;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .wheel-center-inner {
+      text-align: center;
+      padding: 4px 6px;
+    }
+
+    .wheel-center-line1 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #6b2600;
-      white-space: nowrap;
+      color: var(--my-muted);
     }
 
-    @keyframes myWinPop {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.4);
-      }
-      60% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.08);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
+    .wheel-center-line2 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--my-primary-dark);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
-    .my-spin-right {
+    /* Кнопка */
+    .controls {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
     }
 
-    .my-spin-card {
-      background: #fffaf4;
-      border-radius: 16px;
-      border: 1px solid rgba(59, 21, 21, 0.12);
-      padding: 16px 18px 18px;
-      box-sizing: border-box;
-    }
-
-    .my-spin-card h2 {
-      margin: 0 0 8px;
-      font-size: 19px;
-      font-weight: 700;
-      color: var(--my-primary-dark);
-    }
-
-    .my-spin-card p {
-      margin: 0 0 12px;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #4b3a2d;
-    }
-
-    .my-spin-btn {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 999px;
+    .spin-btn {
       border: none;
       cursor: pointer;
-      font-size: 15px;
+      padding: 12px 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--my-primary) 0%, #a52d2d 45%, var(--my-primary-dark) 100%);
+      color: #fff;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      font-size: 14px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #fff7ee;
-      background: linear-gradient(135deg, var(--my-primary) 0%, #511010 100%);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+      box-shadow: 0 10px 24px rgba(123, 38, 38, 0.5);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
     }
 
-    .my-spin-btn:hover:not(:disabled) {
+    .spin-btn:hover:not(:disabled) {
       transform: translateY(-1px);
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+      filter: brightness(1.05);
+      box-shadow: 0 14px 28px rgba(123, 38, 38, 0.55);
     }
 
-    .my-spin-btn:active:not(:disabled) {
-      transform: translateY(1px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+    .spin-btn:active:not(:disabled) {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 6px 16px rgba(123, 38, 38, 0.45);
     }
 
-    .my-spin-btn:disabled {
-      opacity: 0.55;
+    .spin-btn:disabled {
       cursor: default;
+      opacity: 0.55;
       box-shadow: none;
     }
 
-    .my-spin-note {
-      margin-top: 8px;
-      font-size: 12px;
-      line-height: 1.5;
-      color: #6a5444;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
-      padding: 6px 9px;
-      border: 1px dashed rgba(123, 38, 38, 0.3);
+    .spin-btn-icon {
+      font-size: 18px;
     }
 
-    .my-spin-result {
-      margin-top: 10px;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #3a2b21;
-      min-height: 40px;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    .my-spin-result.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .my-spin-result strong {
-      color: var(--my-primary-dark);
-    }
-
-    .my-spin-result a {
-      color: var(--my-primary);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
-
-    .my-spin-result a:hover {
-      text-decoration-thickness: 2px;
-    }
-
-    .my-spin-debug-btn {
-      margin-top: 6px;
+    .spin-note {
       font-size: 11px;
-      border-radius: 999px;
-      border: 1px dashed rgba(59, 21, 21, 0.35);
-      background: rgba(255, 255, 255, 0.85);
-      color: #8a6a3c;
-      padding: 4px 10px;
-      cursor: pointer;
-      display: none;
+      color: var(--my-muted);
+      text-align: center;
     }
 
-    .my-spin-debug-btn.visible {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+    /* Результат */
+    .result-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 20px;
+      padding: 20px 18px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--my-border-soft);
+      margin-top: 14px;
+      z-index: 1;
     }
 
-    .my-spin-debug-btn::before {
-      content: "⚙️";
-      font-size: 12px;
-    }
-
-    .my-spin-howto {
-      background: #fff;
-      border-radius: 14px;
-      border: 1px dashed rgba(59, 21, 21, 0.26);
-      padding: 12px 14px 14px;
+    .result-title {
       font-size: 13px;
-      box-sizing: border-box;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--my-muted);
+      margin: 0 0 4px;
     }
 
-    .my-spin-howto h3 {
-      margin: 0 0 6px;
-      font-size: 15px;
+    .result-text {
+      font-size: 14px;
+      color: var(--my-text);
+      margin: 0 0 10px;
+    }
+
+    .result-highlight {
       font-weight: 600;
       color: var(--my-primary-dark);
     }
 
-    .my-spin-howto ol {
-      margin: 0 0 0 18px;
-      padding: 0;
+    .result-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      background: rgba(123, 38, 38, 0.06);
+      color: var(--my-primary-dark);
+      border: 1px solid rgba(123, 38, 38, 0.25);
     }
 
-    .my-spin-howto li {
-      margin-bottom: 4px;
+    .result-cta-btn:hover {
+      background: rgba(123, 38, 38, 0.12);
     }
 
-    /* Феєрверк */
-    .my-fireworks {
+    .result-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(197, 155, 71, 0.1);
+      border: 1px dashed rgba(197, 155, 71, 0.7);
+      color: var(--my-primary-dark);
+      font-family: "Montserrat", monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .result-code-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--my-muted);
+    }
+
+    /* Бейдж виграшу */
+    .win-badge {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ffeeca 0%, #fbd38d 40%, #f6ad55 100%);
+      color: #3f1e00;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    .win-badge.visible {
+      display: inline-flex;
+      animation: badge-pop 0.32s ease-out;
+    }
+
+    .win-badge-icon {
+      font-size: 16px;
+    }
+
+    @keyframes badge-pop {
+      0% {
+        transform: translateY(-6px) scale(0.7);
+        opacity: 0;
+      }
+      60% {
+        transform: translateY(0) scale(1.08);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Феєрверки */
+    .fireworks-layer {
+      pointer-events: none;
       position: fixed;
       inset: 0;
-      pointer-events: none;
       overflow: hidden;
-      z-index: 9999;
+      z-index: 999;
     }
 
-    .my-fireworks-dot {
+    .firework {
       position: absolute;
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #ffffff 0, #ffd27a 40%, #ff7b7b 100%);
-      opacity: 0;
-      animation: myFirework 700ms ease-out forwards;
+      background: #ffd16a;
+      box-shadow:
+        0 0 8px rgba(255, 209, 106, 0.9),
+        0 0 16px rgba(255, 255, 255, 0.9);
+      animation: firework-burst 900ms ease-out forwards;
     }
 
-    @keyframes myFirework {
+    .firework.alt {
+      background: #ffffff;
+      box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.9),
+        0 0 18px rgba(255, 209, 106, 0.8);
+    }
+
+    @keyframes firework-burst {
       0% {
-        transform: translate(0, 0) scale(0.4);
+        transform: translate(0, 0) scale(0.1);
+        opacity: 1;
+      }
+      70% {
+        transform: translate(var(--dx), var(--dy)) scale(1);
         opacity: 1;
       }
       100% {
-        transform: translate(var(--dx), var(--dy)) scale(1);
+        transform: translate(var(--dx), var(--dy)) scale(0.3);
         opacity: 0;
       }
     }
 
-    @media (max-width: 768px) {
-      .my-spin-container {
-        padding: 18px 14px 20px;
-        border-radius: 18px;
-      }
+    /* DEBUG банер + кнопка */
+    .debug-banner {
+      position: fixed;
+      inset-inline: 50%;
+      transform: translateX(-50%);
+      top: 10px;
+      z-index: 1000;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(123, 38, 38, 0.92);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
 
-      .my-spin-body-page {
-        grid-template-columns: 1fr;
-      }
+    .debug-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #48bb78;
+      box-shadow: 0 0 0 4px rgba(72, 187, 120, 0.3);
+    }
 
-      .my-spin-wheel-wrapper {
-        width: 220px;
-        height: 220px;
-      }
+    .debug-btn {
+      margin-top: 8px;
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(0, 0, 0, 0.2);
+      background: rgba(246, 241, 234, 0.9);
+      color: var(--my-text);
+      cursor: pointer;
+      display: none;
+    }
+
+    .debug-btn.visible {
+      display: inline-block;
+    }
+
+    .debug-btn:hover {
+      background: rgba(246, 241, 234, 1);
+    }
+
+    /* Кредит внизу (опц., можна сховати) */
+    .footer-note {
+      margin-top: 14px;
+      font-size: 10px;
+      color: var(--my-muted);
     }
   </style>
 </head>
 <body>
-  <section class="my-spin-page">
-    <div class="my-spin-container">
-      <header class="my-spin-header-page">
-        <div class="my-spin-tag">МʼЯСТОРІЯ • ПОДАРУНКОВЕ КОЛЕСО</div>
-        <h1>Колесо фортуни МʼЯСТОРІЯ</h1>
-        <p>
-          Зроби свій оберт – і гарантовано отримай подарунок:
-          серед призів купони на знижку, промокоди та вечеря в ресторані МʼЯСТОРІЯ на двох.
-        </p>
-        <p class="my-spin-subnote">
-          Один гість — один спін на добу. Ми фіксуємо спробу на цьому пристрої.
-        </p>
-      </header>
 
-      <div class="my-spin-body-page">
-        <div class="my-spin-wheel-wrapper">
-          <div class="my-spin-pointer"></div>
-          <div class="my-spin-wheel" id="my-spin-wheel"></div>
+  <!-- DEBUG банер (показується тільки в DEBUG_MODE) -->
+  <div id="debug-banner" class="debug-banner">
+    <span class="debug-dot"></span>
+    DEBUG MODE · Тестовий режим
+  </div>
 
-          <!-- Бейдж виграшу поверх колеса -->
-          <div class="my-win-badge" id="my-win-badge">
-            <div class="my-win-icon" id="my-win-icon">🎁</div>
-            <div class="my-win-label" id="my-win-label">Ваш виграш!<
+  <!-- Феєрверки -->
+  <div id="fireworks-layer" class="fireworks-layer"></div>
+
+  <main class="page-shell">
+    <div class="spin-layout">
+      <!-- Лівий блок: текст + результат -->
+      <section class="spin-card">
+        <header class="spin-card-header">
+          <div class="spin-tagline">
+            <span class="spin-tagline-icon">🎡</span>
+            <span>Колесо фортуни «Мʼясторія»</span>
+          </div>
+          <h1 class="spin-title">Покрути колесо та злови свій мʼясний бонус</h1>
+          <p class="spin-subtitle">
+            Один оберт на день — і шанс отримати знижку або вечерю в ресторані «Мʼясторія» на двох.
+          </p>
+
+          <div class="probabilities">
+            <strong>Ймовірності виграшу:</strong>
+            <div class="prob-row">
+              <span class="prob-dot"></span>
+              <span>≈ 85% — купон на знижку + перехід на сторінку акцій.</span>
+            </div>
+            <div class="prob-row">
+              <span class="prob-dot"></span>
+              <span>≈ 14% — <strong>–20% на всю продукцію</strong> за промокодом <strong>20BF200</strong>.</span>
+            </div>
+            <div class="prob-row">
+              <span class="prob-dot gold"></span>
+              <span><strong>&lt; 1%</strong> — вечеря в «Мʼясторія» на двох (сертифікат на 2000 грн).</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Результат -->
+        <section class="result-card">
+          <div id="win-badge" class="win-badge">
+            <span id="win-badge-icon" class="win-badge-icon">🎟️</span>
+            <span id="win-badge-text">Ваш виграш</span>
+          </div>
+
+          <h2 class="result-title">Ваш результат</h2>
+          <p id="result-text" class="result-text">
+            Натисніть «Крутити колесо», щоб отримати свій шанс на знижку або вечерю в «Мʼясторія».
+          </p>
+
+          <a id="result-link" class="result-cta-btn" href="https://myastoriya.com.ua/ua/actions/" target="_blank" rel="noopener noreferrer" style="display:none;">
+            <span>Перейти до акцій</span> <span>↗</span>
+          </a>
+
+          <div id="result-code" style="display:none;">
+            <div class="result-code">
+              <span class="result-code-label">Промокод</span>
+              <span id="result-code-value">20BF200</span>
+            </div>
+          </div>
+
+          <button id="spin-debug" class="debug-btn" type="button">
+            Debug: скинути ліміт на сьогодні
+          </button>
+        </section>
+
+        <p class="footer-note">
+          *У реальному режимі кожен користувач може крутити колесо лише один раз на добу. У тестовому режимі (DEBUG) обмеження вимкнено.
+        </p>
+      </section>
+
+      <!-- Правий блок: колесо -->
+      <section class="wheel-wrapper">
+        <div class="wheel-shell">
+          <div class="wheel-pointer"></div>
+          <div id="wheel" class="wheel-base">
+            <div id="wheel-ring" class="wheel-ring"></div>
+            <div class="wheel-center">
+              <div class="wheel-center-inner">
+                <div class="wheel-center-line1">myastoriya</div>
+                <div class="wheel-center-line2">spin</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="spin-btn" class="spin-btn" type="button">
+            <span class="spin-btn-icon">🎰</span>
+            <span>Крутити колесо</span>
+          </button>
+          <div class="spin-note">
+            Один оберт на день для чесної гри. У тестовому режимі обмеження вимкнено.
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // -------------------------------
+    // НАЛАШТУВАННЯ
+    // -------------------------------
+    const DEBUG_MODE = true; // 👉 Коли підеш у прод, поміняй на false
+
+    const LS_DATE_KEY = "myastoriya_spin_date";
+    const LS_PRIZE_KEY = "myastoriya_spin_prize";
+
+    const discountPageUrl = "https://myastoriya.com.ua/ua/actions/";
+
+    // Ймовірності (ваги) для типів призів
+    const probabilityConfig = [
+      { type: "coupon", weight: 85 },      // купон + сторінка акцій
+      { type: "discount20", weight: 14 },  // промокод 20BF200
+      { type: "dinner", weight: 1 }        // вечеря на двох (2000 грн)
+    ];
+
+    const prizeDetails = {
+      coupon: {
+        badgeIcon: "🎟️",
+        badgeText: "Купон на знижку",
+        resultText: "Вітаємо! Ви отримали купон на знижку. Перейдіть на сторінку акцій «Мʼясторія» та обирайте свій мʼясний настрій.",
+        linkUrl: discountPageUrl,
+        linkText: "Перейти до акцій"
+      },
+      discount20: {
+        badgeIcon: "💸",
+        badgeText: "-20% на все",
+        resultText: "Ого! Ви виграли знижку <span class=\"result-highlight\">20% на всю продукцію «Мʼясторія»</span>. Скористайтесь промокодом при оформленні замовлення.",
+        code: "20BF200",
+        linkUrl: discountPageUrl,
+        linkText: "Перейти до акцій"
+      },
+      dinner: {
+        badgeIcon: "🍷",
+        badgeText: "Вечеря в «Мʼясторія»",
+        resultText: "Щасти́к! Ви виграли <span class=\"result-highlight\">вечерю в ресторані «Мʼясторія» на двох</span> номіналом 2000 грн. Наш менеджер звʼяжеться з вами для оформлення сертифіката.",
+        linkUrl: discountPageUrl,
+        linkText: "Переглянути інші пропозиції"
+      }
+    };
+
+    // -------------------------------
+    // ДОПОМОЖНІ ФУНКЦІЇ
+    // -------------------------------
+    function todayKey() {
+      const d = new Date();
+      return d.toISOString().slice(0, 10); // YYYY-MM-DD
+    }
+
+    function alreadySpunToday() {
+      try {
+        const storedDate = localStorage.getItem(LS_DATE_KEY);
+        return storedDate === todayKey();
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function lockForToday(prizeType) {
+      try {
+        localStorage.setItem(LS_DATE_KEY, todayKey());
+        localStorage.setItem(LS_PRIZE_KEY, prizeType);
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    function getStoredPrizeType() {
+      try {
+        return localStorage.getItem(LS_PRIZE_KEY);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function pickPrizeTypeWeighted() {
+      const total = probabilityConfig.reduce((sum, p) => sum + p.weight, 0);
+      const r = Math.random() * total;
+      let acc = 0;
+      for (const p of probabilityConfig) {
+        acc += p.weight;
+        if (r <= acc) return p.type;
+      }
+      return probabilityConfig[0].type;
+    }
+
+    function setResultHtml(html) {
+      const el = document.getElementById("result-text");
+      if (el) {
+        el.innerHTML = html;
+      }
+    }
+
+    function updateResultUIForPrize(prizeType) {
+      const detail = prizeDetails[prizeType];
+      if (!detail) return;
+
+      // Текст
+      setResultHtml(detail.resultText);
+
+      // Кнопка-посилання
+      const linkEl = document.getElementById("result-link");
+      if (linkEl) {
+        if (detail.linkUrl) {
+          linkEl.href = detail.linkUrl;
+          linkEl.style.display = "inline-flex";
+          linkEl.querySelector("span").textContent = detail.linkText || "Перейти";
+        } else {
+          linkEl.style.display = "none";
+        }
+      }
+
+      // Промокод
+      const codeWrap = document.getElementById("result-code");
+      const codeValEl = document.getElementById("result-code-value");
+      if (detail.code && codeWrap && codeValEl) {
+        codeValEl.textContent = detail.code;
+        codeWrap.style.display = "block";
+      } else if (codeWrap) {
+        codeWrap.style.display = "none";
+      }
+
+      // Бейдж
+      const badge = document.getElementById("win-badge");
+      const badgeIcon = document.getElementById("win-badge-icon");
+      const badgeText = document.getElementById("win-badge-text");
+      if (badge && badgeIcon && badgeText) {
+        badgeIcon.textContent = detail.badgeIcon;
+        badgeText.textContent = detail.badgeText;
+        badge.classList.add("visible");
+      }
+    }
+
+    function hideWinBadge() {
+      const badge = document.getElementById("win-badge");
+      if (badge) badge.classList.remove("visible");
+    }
+
+    function showLimitMessage() {
+      setResultHtml(
+        "Сьогодні ви вже крутили колесо фортуни. Поверніться завтра, щоб знову спробувати щастя!"
+      );
+    }
+
+    // -------------------------------
+    // Анімація феєрверків
+    // -------------------------------
+    function triggerFireworks() {
+      const layer = document.getElementById("fireworks-layer");
+      if (!layer) return;
+
+      const count = 24;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 3;
+
+      for (let i = 0; i < count; i++) {
+        const f = document.createElement("div");
+        f.className = "firework" + (i % 3 === 0 ? " alt" : "");
+        const angle = (Math.PI * 2 * i) / count;
+        const distance = 80 + Math.random() * 60;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance;
+
+        f.style.left = centerX + "px";
+        f.style.top = centerY + "px";
+        f.style.setProperty("--dx", dx + "px");
+        f.style.setProperty("--dy", dy + "px");
+
+        layer.appendChild(f);
+
+        setTimeout(() => {
+          f.remove();
+        }, 900);
+      }
+    }
+
+    // -------------------------------
+    // ЛОГІКА КОЛЕСА
+    // -------------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+      const spinBtn = document.getElementById("spin-btn");
+      const wheelRing = document.getElementById("wheel-ring");
+      const debugBtn = document.getElementById("spin-debug");
+      const debugBanner = document.getElementById("debug-banner");
+
+      let isSpinning = false;
+      let currentRotation = 0;
+
+      if (DEBUG_MODE && debugBanner) {
+        debugBanner.style.display = "inline-flex";
+      }
+
+      // При старті — якщо вже крутили сьогодні (і не debug), показати результат
+      if (!DEBUG_MODE && alreadySpunToday()) {
+        const storedPrize = getStoredPrizeType();
+        if (storedPrize && prizeDetails[storedPrize]) {
+          updateResultUIForPrize(storedPrize);
+        } else {
+          showLimitMessage();
+        }
+        if (spinBtn) spinBtn.disabled = true;
+      }
+
+      if (spinBtn && wheelRing) {
+        spinBtn.addEventListener("click", () => {
+          if (isSpinning) return;
+
+          if (!DEBUG_MODE && alreadySpunToday()) {
+            showLimitMessage();
+            spinBtn.disabled = true;
+            return;
+          }
+
+          // Скидаємо попередній результат
+          hideWinBadge();
+          const linkEl = document.getElementById("result-link");
+          const codeWrap = document.getElementById("result-code");
+          if (linkEl) linkEl.style.display = "none";
+          if (codeWrap) codeWrap.style.display = "none";
+
+          // Вибір призу
+          const prizeType = pickPrizeTypeWeighted();
+
+          // Випадковий кут в межах від 0 до 360 (але додаємо кілька повних обертів)
+          const minExtraTurns = 4;
+          const maxExtraTurns = 6;
+          const extraTurns =
+            minExtraTurns + Math.floor(Math.random() * (maxExtraTurns - minExtraTurns + 1));
+
+          const randomAngleWithin = Math.random() * 360;
+          const targetRotation = extraTurns * 360 + randomAngleWithin;
+
+          isSpinning = true;
+          if (spinBtn) spinBtn.disabled = true;
+
+          wheelRing.style.transition = "transform 4s cubic-bezier(0.19, 0.9, 0.21, 1.02)";
+          wheelRing.style.transform = `rotate(${currentRotation + targetRotation}deg)`;
+
+          const spinDuration = 4000;
+          setTimeout(() => {
+            isSpinning = false;
+            currentRotation = (currentRotation + targetRotation) % 360;
+
+            // Оновлюємо UI під тип призу
+            updateResultUIForPrize(prizeType);
+
+            // Фіксуємо результат тільки в бойовому режимі
+            if (!DEBUG_MODE) {
+              lockForToday(prizeType);
+            } else {
+              // У debug-режимі не блокуємо кнопку
+              if (spinBtn) spinBtn.disabled = false;
+            }
+
+            // Феєрверк на виграш
+            triggerFireworks();
+          }, spinDuration + 60);
+        });
+      }
+
+      // DEBUG кнопка
+      if (DEBUG_MODE && debugBtn && spinBtn) {
+        debugBtn.classList.add("visible");
+        debugBtn.addEventListener("click", () => {
+          try {
+            localStorage.removeItem(LS_DATE_KEY);
+            localStorage.removeItem(LS_PRIZE_KEY);
+          } catch (e) {
+            // ignore
+          }
+          spinBtn.disabled = false;
+          hideWinBadge();
+          setResultHtml("Debug: ліміт на сьогодні скинуто, можна крутити ще раз.");
+          const linkEl = document.getElementById("result-link");
+          const codeWrap = document.getElementById("result-code");
+          if (linkEl) linkEl.style.display = "none";
+          if (codeWrap) codeWrap.style.display = "none";
+        });
+      } else if (debugBtn) {
+        debugBtn.remove();
+      }
+    });
+  </script>
+</body>
+</html>
