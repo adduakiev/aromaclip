@@ -160,6 +160,64 @@
       z-index: 3;
     }
 
+    /* Бейдж виграшу */
+    .my-win-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      background: radial-gradient(circle at 30% 20%, #fffbe8 0, #ffe38a 40%, #ffb347 100%);
+      border-radius: 999px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid rgba(128, 46, 0, 0.8);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .my-win-badge.visible {
+      animation: myWinPop 450ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    .my-win-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #fff 0, #ffe9b5 45%, #ff9f6b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .my-win-label {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b2600;
+      white-space: nowrap;
+    }
+
+    @keyframes myWinPop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.4);
+      }
+      60% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.08);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
     .my-spin-right {
       display: flex;
       flex-direction: column;
@@ -376,265 +434,8 @@
         <div class="my-spin-wheel-wrapper">
           <div class="my-spin-pointer"></div>
           <div class="my-spin-wheel" id="my-spin-wheel"></div>
-        </div>
 
-        <div class="my-spin-right">
-          <div class="my-spin-card">
-            <h2>Зробіть свій оберт</h2>
-            <p>
-              Натисніть кнопку, щоб запустити колесо фортуни.
-              Після завершення обертання ви побачите свій приз та інструкцію, як ним скористатися.
-            </p>
-
-            <button id="my-spin-button" class="my-spin-btn">
-              Крутити колесо
-            </button>
-
-            <div class="my-spin-note">
-              Після першого оберту сьогодні спроба буде зафіксована.  
-              Завтра можна повернутися за новим шансом.
-            </div>
-
-            <div class="my-spin-result" id="my-spin-result"></div>
-            <button id="my-spin-debug" class="my-spin-debug-btn" type="button">
-              Debug: скинути ліміт на сьогодні
-            </button>
-          </div>
-
-          <div class="my-spin-howto">
-            <h3>Як це працює:</h3>
-            <ol>
-              <li>Натискаєте “Крутити колесо”.</li>
-              <li>Чекаєте, поки колесо зупиниться.</li>
-              <li>Отримуєте свій приз і використовуєте його при замовленні.</li>
-              <li>Повертаєтесь завтра – і крутите знову.</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const wheel = document.getElementById("my-spin-wheel");
-      const spinBtn = document.getElementById("my-spin-button");
-      const resultBox = document.getElementById("my-spin-result");
-      const debugBtn = document.getElementById("my-spin-debug");
-
-      if (!wheel || !spinBtn || !resultBox) return;
-
-      // 🔧 DEBUG MODE: коли закінчиш тестувати — постав FALSE
-      const DEBUG_MODE = falce;
-
-      // 🔗 Сторінка з акціями МʼЯСТОРІЯ
-      const discountPageUrl = "https://myastoriya.com.ua/ua/"; 
-
-      const LS_DATE_KEY = "myastoriyaSpinDate";
-      const LS_PRIZE_KEY = "myastoriyaSpinPrize";
-
-      let isSpinning = false;
-
-      function getTodayStr() {
-        return new Date().toISOString().slice(0, 10);
-      }
-
-      function alreadySpunToday() {
-        try {
-          const lastDate = localStorage.getItem(LS_DATE_KEY);
-          return lastDate === getTodayStr();
-        } catch (e) {
-          return false;
-        }
-      }
-
-      function lockForToday(prizeCode) {
-        try {
-          localStorage.setItem(LS_DATE_KEY, getTodayStr());
-          if (prizeCode) {
-            localStorage.setItem(LS_PRIZE_KEY, prizeCode);
-          }
-        } catch (e) {}
-        spinBtn.disabled = true;
-      }
-
-      function setResultHtml(html) {
-        resultBox.classList.remove("visible");
-        // перезапуск анімації
-        void resultBox.offsetWidth;
-        resultBox.innerHTML = html;
-        resultBox.classList.add("visible");
-      }
-
-      function showCouponResult() {
-        setResultHtml(
-          "<strong>Ваш приз:</strong> купон на знижку!<br>" +
-          "Перейдіть на сторінку з актуальними пропозиціями: " +
-          '<a href="' +
-          discountPageUrl +
-          '" target="_blank" rel="noopener">перейти до знижок</a>.'
-        );
-      }
-
-      function show20Result() {
-        setResultHtml(
-          "<strong>Ваш приз:</strong> -20% на всю продукцію МʼЯСТОРІЯ!<br>" +
-          'Використайте промокод: <strong style="letter-spacing:0.12em;">20BF200</strong> ' +
-          "при оформленні замовлення."
-        );
-      }
-
-      function showDinnerResult() {
-        setResultHtml(
-          "<strong>Джекпот!</strong> Ви виграли вечерю в ресторані МʼЯСТОРІЯ на двох " +
-          "номіналом <strong>2000 ₴</strong>.<br>" +
-          "Наш менеджер звʼяжеться з вами для підтвердження призу або напишіть нам у чат підтримки."
-        );
-      }
-
-      function showLimitMessage() {
-        setResultHtml(
-          "Сьогодні ви вже крутили колесо. Поверніться завтра — подарунки ще будуть."
-        );
-      }
-
-      function restoreTodayState() {
-        if (!alreadySpunToday()) return;
-
-        spinBtn.disabled = true;
-        let prize = null;
-
-        try {
-          prize = localStorage.getItem(LS_PRIZE_KEY);
-        } catch (e) {}
-
-        if (prize === "coupon") {
-          showCouponResult();
-        } else if (prize === "20percent") {
-          show20Result();
-        } else if (prize === "dinner") {
-          showDinnerResult();
-        } else {
-          showLimitMessage();
-        }
-      }
-
-      // 🎇 Феєрверк
-      function triggerFireworks() {
-        const container = document.createElement("div");
-        container.className = "my-fireworks";
-        const dots = 40;
-
-        for (let i = 0; i < dots; i++) {
-          const dot = document.createElement("span");
-          dot.className = "my-fireworks-dot";
-
-          const angle = Math.random() * Math.PI * 2;
-          const radius = 80 + Math.random() * 80;
-          const dx = Math.cos(angle) * radius;
-          const dy = Math.sin(angle) * radius;
-
-          dot.style.setProperty("--dx", dx + "px");
-          dot.style.setProperty("--dy", dy + "px");
-
-          const left = 50 + Math.cos(angle) * 10;
-          const top = 30 + Math.sin(angle) * 10;
-          dot.style.left = left + "%";
-          dot.style.top = top + "%";
-
-          dot.style.animationDelay = (Math.random() * 0.25).toFixed(2) + "s";
-
-          container.appendChild(dot);
-        }
-
-        document.body.appendChild(container);
-
-        setTimeout(function () {
-          container.remove();
-        }, 1200);
-      }
-
-      // 🎲 Розподіл шансів:
-      // 0.00–0.85  -> купон (85%)
-      // 0.85–0.99  -> 20% на все (14%)
-      // 0.99–1.00  -> вечеря (~1%)
-      function choosePrizeCode() {
-        const r = Math.random();
-        if (r < 0.85) return "coupon";
-        if (r < 0.99) return "20percent";
-        return "dinner";
-      }
-
-      function spinWheel() {
-        if (isSpinning) return;
-
-        if (!DEBUG_MODE && alreadySpunToday()) {
-          showLimitMessage();
-          spinBtn.disabled = true;
-          return;
-        }
-
-        isSpinning = true;
-        spinBtn.disabled = true;
-        spinBtn.classList.add("is-spinning");
-        wheel.classList.add("is-spinning");
-        setResultHtml("Крутимо колесо…");
-
-        const extraSpins = 4;
-        const randomDeg = Math.floor(Math.random() * 360);
-        const finalRotation = extraSpins * 360 + randomDeg;
-        wheel.style.setProperty("--spin-rotation", finalRotation + "deg");
-
-        const prizeCode = choosePrizeCode();
-
-        setTimeout(function () {
-          isSpinning = false;
-          spinBtn.classList.remove("is-spinning");
-          wheel.classList.remove("is-spinning");
-
-          if (!DEBUG_MODE) {
-            lockForToday(prizeCode);
-          } else {
-            // у debug режимі не фіксуємо в localStorage, щоб можна було крутити
-            spinBtn.disabled = false;
-          }
-
-          if (prizeCode === "coupon") {
-            showCouponResult();
-          } else if (prizeCode === "20percent") {
-            show20Result();
-          } else {
-            showDinnerResult();
-          }
-
-          triggerFireworks();
-        }, 4100);
-      }
-
-      spinBtn.addEventListener("click", spinWheel);
-
-      // DEBUG-кнопка: скинути ліміт на сьогодні
-      if (DEBUG_MODE && debugBtn) {
-        debugBtn.classList.add("visible");
-        debugBtn.addEventListener("click", function () {
-          try {
-            localStorage.removeItem(LS_DATE_KEY);
-            localStorage.removeItem(LS_PRIZE_KEY);
-          } catch (e) {}
-          spinBtn.disabled = false;
-          setResultHtml("Debug: ліміт на сьогодні скинуто, можна крутити ще раз.");
-        });
-      } else if (debugBtn) {
-        // На продакшені кнопка взагалі не показується
-        debugBtn.remove();
-      }
-
-      // Відновити стан, якщо користувач вже крутив сьогодні (тільки якщо не debug)
-      if (!DEBUG_MODE) {
-        restoreTodayState();
-      }
-    });
-  </script>
-</body>
-</html>
-
+          <!-- Бейдж виграшу поверх колеса -->
+          <div class="my-win-badge" id="my-win-badge">
+            <div class="my-win-icon" id="my-win-icon">🎁</div>
+            <div class="my-win-label" id="my-win-label">Ваш виграш!<
