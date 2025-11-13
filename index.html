@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Колесо фортуни МʼЯСТОРІЯ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --my-primary: #7b2626;
+      --my-primary-dark: #3b1515;
+      --my-accent: #f6eee2;
+      --my-gold: #c39b4a;
+      --my-text-dark: #1f1a18;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #fdf7ef 0, #f3e2cf 40%, #f7efe4 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--my-text-dark);
+    }
+
+    .my-spin-page {
+      padding: 24px 12px 32px;
+      min-height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .my-spin-container {
+      max-width: 1040px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      border: 1px solid rgba(59, 21, 21, 0.12);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.18);
+      padding: 24px 22px 26px;
+      box-sizing: border-box;
+    }
+
+    .my-spin-header-page {
+      text-align: left;
+      margin-bottom: 22px;
+    }
+
+    .my-spin-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: rgba(123, 38, 38, 0.09);
+      color: var(--my-primary-dark);
+      margin-bottom: 10px;
+    }
+
+    .my-spin-header-page h1 {
+      margin: 0 0 8px;
+      font-size: clamp(22px, 3.4vw, 30px);
+      line-height: 1.25;
+      font-weight: 800;
+      color: var(--my-primary-dark);
+    }
+
+    .my-spin-header-page p {
+      margin: 0 0 6px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #47352a;
+    }
+
+    .my-spin-subnote {
+      font-size: 13px;
+      color: #5c4738;
+      margin: 8px 0 0;
+    }
+
+    .my-spin-body-page {
+      display: grid;
+      grid-template-columns: minmax(0, 320px) minmax(0, 1.4fr);
+      gap: 20px;
+      align-items: flex-start;
+      margin-top: 16px;
+    }
+
+    .my-spin-wheel-wrapper {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      margin: 0 auto;
+    }
+
+    .my-spin-wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 10px solid var(--my-primary-dark);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      background:
+        conic-gradient(
+          #fdf6ec 0deg 45deg,
+          #f1e0cf 45deg 90deg,
+          #fdf6ec 90deg 135deg,
+          #f1e0cf 135deg 180deg,
+          #fdf6ec 180deg 225deg,
+          #f1e0cf 225deg 270deg,
+          #fdf6ec 270deg 315deg,
+          #f1e0cf 315deg 360deg
+        );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 4s cubic-bezier(0.13, 0.82, 0.13, 1);
+      transform: rotate(var(--spin-rotation, 0deg));
+      overflow: hidden;
+    }
+
+    .my-spin-wheel::after {
+      content: "SPIN";
+      position: absolute;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #f5e0cf 45%, #f0d2bc 100%);
+      border: 3px solid var(--my-primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: 0.12em;
+      color: var(--my-primary-dark);
+      text-transform: uppercase;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .my-spin-pointer {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-bottom: 26px solid var(--my-gold);
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+      z-index: 3;
+    }
+
+    .my-spin-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .my-spin-card {
+      background: #fffaf4;
+      border-radius: 16px;
+      border: 1px solid rgba(59, 21, 21, 0.12);
+      padding: 16px 18px 18px;
+      box-sizing: border-box;
+    }
+
+    .my-spin-card h2 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--my-primary-dark);
+    }
+
+    .my-spin-card p {
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #4b3a2d;
+    }
+
+    .my-spin-btn {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff7ee;
+      background: linear-gradient(135deg, var(--my-primary) 0%, #511010 100%);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    }
+
+    .my-spin-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+    }
+
+    .my-spin-btn:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+    }
+
+    .my-spin-btn:disabled {
+      opacity: 0.55;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .my-spin-note {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #6a5444;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: 6px 9px;
+      border: 1px dashed rgba(123, 38, 38, 0.3);
+    }
+
+    .my-spin-result {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #3a2b21;
+      min-height: 40px;
+    }
+
+    .my-spin-result strong {
+      color: var(--my-primary-dark);
+    }
+
+    .my-spin-result a {
+      color: var(--my-primary);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .my-spin-result a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    .my-spin-howto {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px dashed rgba(59, 21, 21, 0.26);
+      padding: 12px 14px 14px;
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+
+    .my-spin-howto h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--my-primary-dark);
+    }
+
+    .my-spin-howto ol {
+      margin: 0 0 0 18px;
+      padding: 0;
+    }
+
+    .my-spin-howto li {
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .my-spin-container {
+        padding: 18px 14px 20px;
+        border-radius: 18px;
+      }
+
+      .my-spin-body-page {
+        grid-template-columns: 1fr;
+      }
+
+      .my-spin-wheel-wrapper {
+        width: 220px;
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="my-spin-page">
+    <div class="my-spin-container">
+      <header class="my-spin-header-page">
+        <div class="my-spin-tag">МʼЯСТОРІЯ • ПОДАРУНКОВЕ КОЛЕСО</div>
+        <h1>Колесо фортуни МʼЯСТОРІЯ</h1>
+        <p>
+          Зроби свій оберт – і гарантовано отримай подарунок:
+          серед призів купони на знижку, промокоди та вечеря в ресторані МʼЯСТОРІЯ на двох.
+        </p>
+        <p class="my-spin-subnote">
+          Один гість — один спін на добу. Ми фіксуємо спробу на цьому пристрої.
+        </p>
+      </header>
+
+      <div class="my-spin-body-page">
+        <div class="my-spin-wheel-wrapper">
+          <div class="my-spin-pointer"></div>
+          <div class="my-spin-wheel" id="my-spin-wheel"></div>
+        </div>
+
+        <div class="my-spin-right">
+          <div class="my-spin-card">
+            <h2>Зробіть свій оберт</h2>
+            <p>
+              Натисніть кнопку, щоб запустити колесо фортуни.
+              Після завершення обертання ви побачите свій приз та інструкцію, як ним скористатися.
+            </p>
+
+            <button id="my-spin-button" class="my-spin-btn">
+              Крутити колесо
+            </button>
+
+            <div class="my-spin-note">
+              Після першого оберту сьогодні спроба буде зафіксована.  
+              Завтра можна повернутися за новим шансом.
+            </div>
+
+            <div class="my-spin-result" id="my-spin-result"></div>
+          </div>
+
+          <div class="my-spin-howto">
+            <h3>Як це працює:</h3>
+            <ol>
+              <li>Натискаєте “Крутити колесо”.</li>
+              <li>Чекаєте, поки колесо зупиниться.</li>
+              <li>Отримуєте свій приз і використовуєте його при замовленні.</li>
+              <li>Повертаєтесь завтра – і крутите знову.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const wheel = document.getElementById("my-spin-wheel");
+      const spinBtn = document.getElementById("my-spin-button");
+      const resultBox = document.getElementById("my-spin-result");
+
+      if (!wheel || !spinBtn || !resultBox) return;
+
+      // 🔗 Сторінка з акціями МʼЯСТОРІЯ
+      const discountPageUrl = "https://myastoriya.com.ua/ua/"; 
+
+      const LS_DATE_KEY = "myastoriyaSpinDate";
+      const LS_PRIZE_KEY = "myastoriyaSpinPrize";
+
+      let isSpinning = false;
+
+      function getTodayStr() {
+        return new Date().toISOString().slice(0, 10);
+      }
+
+      function alreadySpunToday() {
+        try {
+          const lastDate = localStorage.getItem(LS_DATE_KEY);
+          return lastDate === getTodayStr();
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function lockForToday(prizeCode) {
+        try {
+          localStorage.setItem(LS_DATE_KEY, getTodayStr());
+          if (prizeCode) {
+            localStorage.setItem(LS_PRIZE_KEY, prizeCode);
+          }
+        } catch (e) {}
+        spinBtn.disabled = true;
+      }
+
+      function showCouponResult() {
+        resultBox.innerHTML =
+          "<strong>Ваш приз:</strong> купон на знижку!<br>" +
+          "Перейдіть на сторінку з актуальними пропозиціями: " +
+          '<a href="' +
+          discountPageUrl +
+          '" target="_blank" rel="noopener">перейти до знижок</a>.';
+      }
+
+      function show20Result() {
+        resultBox.innerHTML =
+          "<strong>Ваш приз:</strong> -20% на всю продукцію МʼЯСТОРІЯ!<br>" +
+          'Використайте промокод: <strong style="letter-spacing:0.12em;">20BF200</strong> ' +
+          "при оформленні замовлення.";
+      }
+
+      function showDinnerResult() {
+        resultBox.innerHTML =
+          "<strong>Джекпот!</strong> Ви виграли вечерю в ресторані МʼЯСТОРІЯ на двох " +
+          "номіналом <strong>2000 ₴</strong>.<br>" +
+          "Наш менеджер звʼяжеться з вами для підтвердження призу або напишіть нам у чат підтримки.";
+      }
+
+      function showLimitMessage() {
+        resultBox.textContent =
+          "Сьогодні ви вже крутили колесо. Поверніться завтра — подарунки ще будуть.";
+      }
+
+      function restoreTodayState() {
+        if (!alreadySpunToday()) return;
+
+        spinBtn.disabled = true;
+        let prize = null;
+
+        try {
+          prize = localStorage.getItem(LS_PRIZE_KEY);
+        } catch (e) {}
+
+        if (prize === "coupon") {
+          showCouponResult();
+        } else if (prize === "20percent") {
+          show20Result();
+        } else if (prize === "dinner") {
+          showDinnerResult();
+        } else {
+          showLimitMessage();
+        }
+      }
+
+      // 🎲 Розподіл шансів:
+      // 0.00–0.85  -> купон (85%)
+      // 0.85–0.99  -> 20% на все (14%)
+      // 0.99–1.00  -> вечеря (~1%)
+      function choosePrizeCode() {
+        const r = Math.random();
+        if (r < 0.85) return "coupon";
+        if (r < 0.99) return "20percent";
+        return "dinner";
+      }
+
+      function spinWheel() {
+        if (isSpinning) return;
+
+        if (alreadySpunToday()) {
+          showLimitMessage();
+          spinBtn.disabled = true;
+          return;
+        }
+
+        isSpinning = true;
+        resultBox.textContent = "Крутимо колесо…";
+
+        const extraSpins = 4;
+        const randomDeg = Math.floor(Math.random() * 360);
+        const finalRotation = extraSpins * 360 + randomDeg;
+        wheel.style.setProperty("--spin-rotation", finalRotation + "deg");
+
+        const prizeCode = choosePrizeCode();
+
+        setTimeout(function () {
+          isSpinning = false;
+          lockForToday(prizeCode);
+
+          if (prizeCode === "coupon") {
+            showCouponResult();
+          } else if (prizeCode === "20percent") {
+            show20Result();
+          } else {
+            showDinnerResult();
+          }
+        }, 4100);
+      }
+
+      spinBtn.addEventListener("click", spinWheel);
+      restoreTodayState();
+    });
+  </script>
+</body>
+</html>
