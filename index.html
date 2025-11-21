@@ -2,18 +2,20 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <title>Колесо фортуни «Мʼясторія»</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>МʼЯСТОРІЯ • Подарункові картки</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
     :root {
-      /* Приблизні фірмові кольори Мʼясторії */
       --my-red: #d62828;
-      --my-dark: #1f1f1f;
-      --my-cream: #f5f1e8;
-      --my-gold: #c9a15b;
-      --my-grey: #555555;
-      --shadow-soft: 0 18px 40px rgba(0,0,0,0.18);
+      --my-red-dark: #7b1515;
+      --my-cream: #f6f1ea;
+      --my-cream-light: #fbf7f0;
+      --my-brown: #3c2415;
+      --my-gold: #c79b4b;
+      --my-text: #221711;
+      --my-muted: #7a6b60;
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.22);
     }
 
     * {
@@ -22,647 +24,405 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(245,241,232,0.9), rgba(245,241,232,0.95)),
-        linear-gradient(135deg, #111 0%, #3a0f0f 100%);
-      color: var(--my-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .page-wrapper {
-      max-width: 1100px;
-      width: 100%;
-      background: rgba(255,255,255,0.96);
-      border-radius: 24px;
-      box-shadow: var(--shadow-soft);
-      padding: 32px 24px 28px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Декоративна стрічка вгорі */
-    .page-ribbon {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.08;
+      min-height: 100vh;
       background:
         repeating-linear-gradient(
           135deg,
-          var(--my-red) 0,
-          var(--my-red) 14px,
-          transparent 14px,
-          transparent 28px
+          #fdf7f1 0,
+          #fdf7f1 14px,
+          #f3e3d7 14px,
+          #f3e3d7 28px
         );
-      mix-blend-mode: multiply;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 28px;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      padding: 24px 12px;
+      color: var(--my-text);
     }
 
-    @media (max-width: 900px) {
-      .content {
-        grid-template-columns: 1fr;
+    .page-shell {
+      width: 100%;
+      max-width: 1100px;
+      background: rgba(255,255,255,0.96);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .page-header {
+      background: #111;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-wrap {
+      width: 120px;
+      max-width: 36vw;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .brand-logo-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .brand-text {
+      color: #f9f5ee;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      opacity: 0.8;
+    }
+
+    .debug-pill {
+      font-size: 10px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px dashed rgba(255,255,255,0.5);
+      color: #fefce8;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .debug-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34,197,94,0.7);
+    }
+
+    .debug-pill.off .debug-pill-dot {
+      background: #9ca3af;
+      box-shadow: none;
+    }
+
+    .debug-pill.off {
+      opacity: 0.7;
+    }
+
+    @media (max-width: 640px) {
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
 
-    .left-panel {
-      padding-right: 12px;
+    .page-body {
+      padding: 22px 22px 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: flex-start;
     }
 
-    .label-badge {
+    @media (max-width: 900px) {
+      .page-body {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .intro {
+      padding-right: 8px;
+    }
+
+    .tag {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 4px 10px;
       border-radius: 999px;
-      background: rgba(214,40,40,0.06);
+      background: rgba(214,40,40,0.05);
       border: 1px solid rgba(214,40,40,0.18);
-      color: var(--my-red);
       font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
       text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--my-red);
       margin-bottom: 10px;
     }
 
-    .label-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--my-red);
-    }
-
-    h1 {
-      margin: 4px 0 10px;
-      font-size: clamp(26px, 3.4vw, 32px);
-      line-height: 1.15;
-      color: var(--my-dark);
-    }
-
-    .subtitle {
-      font-size: 14px;
-      color: var(--my-grey);
-      max-width: 460px;
-      line-height: 1.55;
-      margin-bottom: 18px;
-    }
-
-    .highlight-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-
-    .highlight-pill {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.11em;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.06);
-      background: rgba(245,241,232,0.8);
-      color: #333;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .highlight-dot {
+    .tag-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--my-gold);
+      background: var(--my-red);
     }
 
-    .chance-list {
+    .intro h1 {
+      margin: 0 0 8px;
+      font-size: clamp(22px, 3vw, 28px);
+      line-height: 1.15;
+      color: var(--my-brown);
+    }
+
+    .intro-sub {
+      font-size: 14px;
+      color: var(--my-muted);
+      max-width: 480px;
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+
+    .list {
       list-style: none;
       padding: 0;
-      margin: 0 0 18px;
+      margin: 0 0 14px;
       font-size: 13px;
-      color: #444;
+      color: #443328;
     }
 
-    .chance-list li {
+    .list li {
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 6px;
     }
 
-    .chance-bullet {
-      margin-top: 4px;
-      width: 8px;
-      height: 8px;
+    .list-bullet {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       border: 2px solid var(--my-red);
+      margin-top: 5px;
     }
 
-    .chance-title {
-      font-weight: 600;
-      color: var(--my-dark);
-    }
-
-    .chance-note {
-      font-size: 12px;
-      color: #777;
-      margin-top: 2px;
-    }
-
-    .actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .primary-btn {
-      appearance: none;
-      border: none;
-      border-radius: 999px;
-      padding: 11px 22px;
-      background: var(--my-red);
-      color: #fff;
-      font-weight: 700;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 12px 26px rgba(214,40,40,0.45);
-      transition: transform 0.16s ease-out, box-shadow 0.16s ease-out, background 0.16s ease-out;
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 36px rgba(214,40,40,0.55);
-      background: #e23a3a;
-    }
-
-    .primary-btn:active {
-      transform: translateY(1px) scale(0.98);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-    }
-
-    .primary-btn[disabled] {
-      opacity: 0.5;
-      cursor: default;
-      box-shadow: none;
-      transform: none;
-    }
-
-    .btn-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.5);
-      font-size: 10px;
-    }
-
-    .secondary-link {
-      font-size: 12px;
-      color: var(--my-grey);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-    }
-
-    .secondary-link span {
-      border-bottom: 1px dashed rgba(0,0,0,0.25);
-    }
-
-    .secondary-link svg {
-      width: 14px;
-      height: 14px;
-    }
-
-    .spin-status {
-      font-size: 11px;
-      color: #777;
-      margin-top: 4px;
-    }
-
-    .spin-status strong {
-      color: var(--my-red);
-    }
-
-    .debug-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      background: rgba(255, 193, 7, 0.12);
-      border: 1px dashed rgba(255, 193, 7, 0.7);
-      color: #8a6a00;
-      cursor: pointer;
+    .prob-box {
       margin-top: 8px;
-    }
-
-    .debug-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #ffc107;
-      box-shadow: 0 0 10px rgba(255,193,7,0.7);
-    }
-
-    .debug-chip.off {
-      background: rgba(120, 120, 120, 0.1);
-      border-color: rgba(120, 120, 120, 0.7);
-      color: #555;
-      box-shadow: none;
-    }
-
-    .debug-chip.off .debug-dot {
-      background: #aaa;
-      box-shadow: none;
-    }
-
-    /* ПРАВА ПАНЕЛЬ: колесо */
-
-    .right-panel {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .wheel-card {
-      position: relative;
-      width: min(360px, 100%);
-      aspect-ratio: 1/1;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #fff 0%, #f5f1e8 35%, #2a1713 100%);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-    }
-
-    .wheel-rim {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 999px;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 55%),
-        conic-gradient(
-          from 0deg,
-          #f8e1c4 0deg 30deg,
-          #7f1d1d 30deg 60deg,
-          #fbd1c3 60deg 90deg,
-          #4a1b0f 90deg 120deg,
-          #f8e1c4 120deg 150deg,
-          #7f1d1d 150deg 180deg,
-          #fbd1c3 180deg 210deg,
-          #4a1b0f 210deg 240deg,
-          #f8e1c4 240deg 270deg,
-          #7f1d1d 270deg 300deg,
-          #fbd1c3 300deg 330deg,
-          #4a1b0f 330deg 360deg
-        );
-      border: 8px solid #fdf4e3;
-      box-shadow:
-        0 0 0 2px rgba(0,0,0,0.25),
-        inset 0 0 0 3px rgba(255,255,255,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      transition: transform 5s cubic-bezier(0.25, 0.9, 0.15, 1);
-    }
-
-    .wheel-center {
-      width: 32%;
-      height: 32%;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffe8c2 0%, #c49a5a 45%, #4c3114 100%);
-      box-shadow:
-        0 0 0 4px rgba(0,0,0,0.6),
-        0 0 0 8px rgba(255,255,255,0.4),
-        inset 0 4px 12px rgba(255,255,255,0.4),
-        inset 0 -8px 14px rgba(0,0,0,0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .wheel-center-label {
-      text-align: center;
-      color: #fff8e7;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-weight: 700;
-      padding: 0 12px;
-      line-height: 1.3;
-    }
-
-    .wheel-label-main {
-      display: block;
-      font-size: 16px;
-      letter-spacing: 0.14em;
-      margin-top: 2px;
-    }
-
-    .pointer {
-      position: absolute;
-      top: calc(50% - 190px);
-      width: 56px;
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-
-    .pointer-shape {
-      width: 0;
-      height: 0;
-      border-left: 16px solid transparent;
-      border-right: 16px solid transparent;
-      border-bottom: 30px solid var(--my-red);
-      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.8));
-      border-radius: 4px;
-    }
-
-    .pointer-base {
-      position: absolute;
-      top: 24px;
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      background: #111;
-      border: 3px solid #fdf4e3;
-      box-shadow:
-        0 6px 12px rgba(0,0,0,0.7),
-        inset 0 3px 6px rgba(255,255,255,0.3);
-    }
-
-    .wheel-shadow {
-      position: absolute;
-      inset: auto 10% -30px 10%;
-      height: 60px;
-      background: radial-gradient(ellipse at center, rgba(0,0,0,0.45), transparent 70%);
-      filter: blur(4px);
-      opacity: 0.85;
-      z-index: -1;
-    }
-
-    /* Текст секторів поверх (дуже лайтова реалізація) */
-    .wheel-sectors {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .wheel-sector-labels {
-      position: relative;
-      width: 76%;
-      height: 76%;
-      border-radius: 50%;
-    }
-
-    .wheel-sector-labels span {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform-origin: 0 0;
-      font-size: 11px;
-      font-weight: 700;
-      color: #fff9f0;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      white-space: nowrap;
-    }
-
-    /* Оверлей з виграшем */
-
-    .win-overlay {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at top, rgba(0,0,0,0.88), rgba(0,0,0,0.96));
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      padding: 16px;
-    }
-
-    .win-overlay.visible {
-      display: flex;
-    }
-
-    .win-card {
-      position: relative;
-      max-width: 420px;
-      width: 100%;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #24120e 0%, #3d2517 40%, #7b4a22 100%);
-      box-shadow: 0 22px 48px rgba(0,0,0,0.8);
-      padding: 24px 20px 18px;
-      color: #fff7e9;
-      overflow: hidden;
-    }
-
-    .win-ribbon {
-      position: absolute;
-      top: 14px;
-      right: -60px;
-      padding: 6px 80px;
-      background: linear-gradient(90deg, #fbbf24, #f97316);
-      color: #311807;
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      transform: rotate(18deg);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
-    }
-
-    .win-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 11px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.22);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-bottom: 10px;
-    }
-
-    .win-badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #facc15;
-      box-shadow: 0 0 0 4px rgba(250,204,21,0.25);
-    }
-
-    .win-title {
-      font-size: 20px;
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-
-    .win-subtext {
-      font-size: 13px;
-      color: #fef3c7;
-      margin-bottom: 14px;
-    }
-
-    .win-code-block {
-      display: none;
-      margin-bottom: 12px;
       padding: 10px 12px;
       border-radius: 14px;
-      background: rgba(15,23,42,0.7);
-      border: 1px solid rgba(248,250,252,0.2);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .win-code-label {
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 10px;
-      color: #e5e7eb;
-      margin-bottom: 3px;
-    }
-
-    .win-code-value {
-      font-size: 16px;
-      font-weight: 800;
-      color: #fbbf24;
-    }
-
-    .btn-copy {
-      appearance: none;
-      border: none;
-      border-radius: 999px;
-      padding: 6px 11px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      background: rgba(248,250,252,0.12);
-      color: #f9fafb;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-copy svg {
-      width: 12px;
-      height: 12px;
-    }
-
-    .win-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .btn-primary-gold {
-      appearance: none;
-      border: none;
-      border-radius: 999px;
-      padding: 9px 18px;
+      background: var(--my-cream-light);
       font-size: 12px;
+      color: var(--my-muted);
+      border: 1px dashed rgba(0,0,0,0.12);
+    }
+    .prob-row {
+      margin-top: 3px;
+    }
+    .prob-row strong {
+      color: var(--my-brown);
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--my-muted);
+    }
+    .status strong {
+      color: var(--my-red-dark);
+    }
+
+    /* GRID КАРТОК */
+
+    .grid-wrap {
+      background: var(--my-cream-light);
+      border-radius: 20px;
+      padding: 18px 16px 16px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+      border: 1px solid rgba(0,0,0,0.06);
+      position: relative;
+    }
+
+    .grid-title {
+      font-size: 13px;
       text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--my-muted);
+      margin-bottom: 10px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(80px, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 450px) {
+      .card-grid {
+        gap: 8px;
+      }
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      padding-top: 100%; /* квадрат */
+      perspective: 900px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.22, 0.77, 0.3, 1.02);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.16);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-front {
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #f9ebe0 40%, #f0d0bd 70%, #e2b29a 100%);
+      border: 2px solid #fff6ec;
+      box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,0.08),
+        0 6px 14px rgba(0,0,0,0.2);
+      color: var(--my-brown);
+      flex-direction: column;
+      gap: 4px;
+      text-transform: uppercase;
+      font-size: 11px;
       letter-spacing: 0.16em;
       font-weight: 700;
-      background: linear-gradient(135deg, #fbbf24, #f97316);
-      color: #2a1506;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.7);
     }
 
-    .btn-secondary-ghost {
-      appearance: none;
-      border-radius: 999px;
-      padding: 9px 16px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-weight: 600;
-      border: 1px solid rgba(248,250,252,0.35);
-      background: transparent;
-      color: #e5e7eb;
-      cursor: pointer;
-    }
-
-    .win-footer-note {
-      margin-top: 8px;
-      font-size: 11px;
-      color: #e5e7eb;
+    .card-front span {
+      font-size: 9px;
       opacity: 0.8;
     }
 
-    /* Феєрверки */
+    .card-front-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,0.25);
+    }
 
-    .firework-container {
+    .card-back {
+      background: radial-gradient(circle at 30% 20%, #fff7e6 0, #f9e0b8 45%, #f2b763 100%);
+      transform: rotateY(180deg);
+      border: 2px solid #fef9e6;
+      box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,0.1),
+        0 6px 16px rgba(0,0,0,0.25);
+      padding: 10px;
+      text-align: center;
+      color: #2b1604;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .card-prize-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.85;
+    }
+
+    .card-prize-main {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .card-prize-desc {
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .card-open .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+
+    .grid-footer {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--my-muted);
+    }
+
+    /* ТОСТ / ПОВІДОМЛЕННЯ */
+
+    .toast {
       position: fixed;
-      pointer-events: none;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%) translateY(120%);
+      background: #111827;
+      color: #f9fafb;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.6);
+      opacity: 0;
+      transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+      z-index: 1000;
+    }
+
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .toast.error .toast-dot {
+      background: #ef4444;
+    }
+
+    /* ФЕЄРВЕРКИ */
+
+    .fireworks-layer {
+      position: fixed;
       inset: 0;
+      pointer-events: none;
       overflow: hidden;
       z-index: 900;
     }
 
-    .firework {
+    .firework-dot {
       position: absolute;
       width: 4px;
       height: 4px;
-      background: #fff;
       border-radius: 50%;
+      background: #fff;
       opacity: 0;
-      animation: firework 1.4s ease-out forwards;
+      animation: fireworks 1200ms ease-out forwards;
     }
 
-    @keyframes firework {
+    @keyframes fireworks {
       0% {
-        transform: translate(0, 0) scale(0.7);
+        transform: translate(0,0) scale(0.5);
         opacity: 0;
       }
       10% {
@@ -677,528 +437,450 @@
       }
     }
 
-    /* Технічні елементи, які клієнт не має бачити на проді */
-    .internal-note {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #999;
-      display: none; /* <-- приховано для звичайних користувачів */
-    }
-
   </style>
 </head>
 <body>
-
-<div class="page-wrapper">
-  <div class="page-ribbon"></div>
-
-  <div class="content">
-    <!-- ЛІВА ПАНЕЛЬ -->
-    <div class="left-panel">
-      <div class="label-badge">
-        <div class="label-dot"></div>
-        Щасливе колесо від «Мʼясторія»
-      </div>
-
-      <h1>Крути колесо та вигравай&nbsp;смачні призи</h1>
-
-      <p class="subtitle">
-        Один оберт - і ти вже ближче до знижки чи вечері в ресторані «Мʼясторія».
-        Приз гарантовано для більшості спінів.
-      </p>
-
-      <div class="highlight-row">
-        <div class="highlight-pill">
-          <span class="highlight-dot"></span>
-          до 85% - купони на знижки
+  <div class="page-shell">
+    <header class="page-header">
+      <div class="brand-block">
+        <div class="brand-logo-wrap">
+          <img src="https://myastoriya.com.ua/frontend/myastoriya/dist/images/logo.png" alt="МʼЯСТОРІЯ" />
         </div>
-        <div class="highlight-pill">
-          <span class="highlight-dot"></span>
-          спеціальні пропозиції онлайн
-        </div>
+        <div class="brand-text">Спеціальний розіграш для гостей онлайн</div>
       </div>
 
-      <ul class="chance-list">
-        <li>
-          <div class="chance-bullet"></div>
-          <div>
-            <div class="chance-title">85% обертів - купон на знижку</div>
-            <div class="chance-note">
-              Ти отримуєш посилання на сторінку з актуальними акціями та промо-пропозиціями.
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="chance-bullet"></div>
-          <div>
-            <div class="chance-title">14% обертів - 20% знижка на весь чек</div>
-            <div class="chance-note">
-              Персональний промокод <strong>20BF200</strong> на всю продукцію «Мʼясторія» в онлайн-замовленні.
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="chance-bullet"></div>
-          <div>
-            <div class="chance-title">1% обертів - вечеря в ресторані «Мʼясторія»</div>
-            <div class="chance-note">
-              Подарунковий сертифікат на <strong>2000 грн</strong> для вечері на двох.
-            </div>
-          </div>
-        </li>
-      </ul>
-
-      <div class="actions-row">
-        <button id="spinButton" class="primary-btn">
-          <span class="btn-icon">★</span>
-          <span>Крутити колесо</span>
-        </button>
-
-        <a href="https://myastoriya.com.ua/ua/actions/" target="_blank" class="secondary-link">
-          <span>Дивитися всі акції</span>
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M5 10h7.2L9 6.8 10.4 5.4 15 10l-4.6 4.6L9 13.2 12.2 10H5z" fill="currentColor" />
-          </svg>
-        </a>
-      </div>
-
-      <div id="spinStatus" class="spin-status">
-        Сьогодні ти ще <strong>не</strong> крутив колесо. Удачі! 🥩
-      </div>
-
-      <!-- DEBUG-ТУМБЛЕР -->
-      <button id="debugToggle" class="debug-chip">
-        <span class="debug-dot"></span>
-        DEBUG: UNLIMITED SPINS
+      <button id="debugToggle" class="debug-pill">
+        <span class="debug-pill-dot"></span>
+        DEBUG: unlimited
       </button>
+    </header>
 
-      <div class="internal-note">
-        Internal: daily limit via <code>localStorage["myastoriya_wheel_last_spin"]</code>.
-      </div>
-    </div>
-
-    <!-- ПРАВА ПАНЕЛЬ -->
-    <div class="right-panel">
-      <div class="wheel-card">
-        <div class="pointer">
-          <div class="pointer-shape"></div>
-          <div class="pointer-base"></div>
+    <main class="page-body">
+      <section class="intro">
+        <div class="tag">
+          <span class="tag-dot"></span>
+          Подарункові картки «МʼЯСТОРІЯ»
         </div>
 
-        <div id="wheel" class="wheel-rim">
-          <div class="wheel-sectors">
-            <div class="wheel-sector-labels" id="sectorLabels"></div>
+        <h1>Обери одну з&nbsp;9 карток та відкрий свій мʼясний бонус</h1>
+        <p class="intro-sub">
+          На екрані — девʼять закритих карток. Вибери одну, клікни — і дізнайся, яку знижку отримаєш на наступне замовлення в «МʼЯСТОРІЯ».
+        </p>
+
+        <ul class="list">
+          <li>
+            <div class="list-bullet"></div>
+            <div>Можна відкрити лише <strong>одну картку на день</strong> з цього пристрою.</div>
+          </li>
+          <li>
+            <div class="list-bullet"></div>
+            <div>Після відкриття картки ми покажемо твій приз і підкажемо, як ним скористатися.</div>
+          </li>
+        </ul>
+
+        <div class="prob-box">
+          <div><strong>Можливі призи:</strong></div>
+          <div class="prob-row">• Купон на знижку на наступне замовлення.</div>
+          <div class="prob-row">• Знижка <strong>-20%</strong> на весь чек.</div>
+          <div class="prob-row">• Знижка <strong>-30%</strong> на весь чек.</div>
+          <div class="prob-row">• <strong>Головний приз</strong> — знижка <strong>-60%</strong> на наступне замовлення.</div>
+          <div class="prob-row" style="margin-top:6px;">
+            <em>Ймовірність головного призу становить близько <strong>1%</strong>.</em>
+          </div>
+        </div>
+
+        <div id="statusText" class="status">
+          Сьогодні ти ще <strong>не</strong> відкривав картку. Обирай — удачі! 🥩
+        </div>
+      </section>
+
+      <section class="grid-wrap">
+        <div class="grid-title">Натисни на будь-яку картку, щоб відкрити її</div>
+        <div id="cardGrid" class="card-grid">
+          <!-- 9 карток -->
+          <div class="card" data-index="0">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
+            </div>
           </div>
 
-          <div class="wheel-center">
-            <div class="wheel-center-label">
-              spin &amp; win
-              <span class="wheel-label-main">МʼЯСТОРІЯ</span>
+          <div class="card" data-index="1">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-index="2">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-index="3">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-index="4">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-index="5">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-index="6">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-index="7">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-index="8">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-front-dot"></div>
+                ВИБРАТИ
+                <span>картку</span>
+              </div>
+              <div class="card-back">
+                <div class="card-prize-label">Ваш приз</div>
+                <div class="card-prize-main">???</div>
+                <div class="card-prize-desc"></div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="wheel-shadow"></div>
-      </div>
-    </div>
+        <div class="grid-footer">
+          Після відкриття картки інші залишаться закритими до наступного дня (для клієнтів; в DEBUG-режимі — без обмежень).
+        </div>
+      </section>
+    </main>
   </div>
-</div>
 
-<!-- ФЕЄРВЕРКИ -->
-<div id="fireworkContainer" class="firework-container"></div>
-
-<!-- ОВЕРЛЕЙ З ВИГРАШЕМ -->
-<div id="winOverlay" class="win-overlay">
-  <div class="win-card">
-    <div class="win-ribbon">Вітаємо, твій приз!</div>
-
-    <div class="win-badge">
-      <div class="win-badge-dot"></div>
-      моментальна винагорода
-    </div>
-
-    <div id="winTitle" class="win-title">Ти отримав приз 🎉</div>
-    <div id="winSubtext" class="win-subtext"></div>
-
-    <div id="winCodeBlock" class="win-code-block">
-      <div>
-        <div class="win-code-label">Промокод</div>
-        <div id="winCodeValue" class="win-code-value">20BF200</div>
-      </div>
-      <button id="copyCodeBtn" class="btn-copy" type="button">
-        <svg viewBox="0 0 20 20" aria-hidden="true">
-          <path d="M6 2h9a1 1 0 0 1 1 1v11h-2V4H6V2zm-2 3h9a1 1 0 0 1 1 1v11H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2v8h7V7H5z" fill="currentColor" />
-        </svg>
-        Скопіювати
-      </button>
-    </div>
-
-    <div class="win-actions">
-      <button id="goToPromoBtn" class="btn-primary-gold" type="button">
-        Перейти до акцій
-        <svg viewBox="0 0 20 20" aria-hidden="true">
-          <path d="M5 10h7.2L9 6.8 10.4 5.4 15 10l-4.6 4.6L9 13.2 12.2 10H5z" fill="currentColor" />
-        </svg>
-      </button>
-      <button id="closeWinBtn" class="btn-secondary-ghost" type="button">
-        Закрити
-      </button>
-    </div>
-
-    <div id="winFooterNote" class="win-footer-note">
-      Приз активний тільки сьогодні. Деталі використання уточнюй в умовах акцій на сайті.
-    </div>
+  <div id="toast" class="toast">
+    <span class="toast-dot"></span>
+    <span id="toastText"></span>
   </div>
-</div>
 
-<script>
-  // =========================
-  // НАЛАШТУВАННЯ
-  // =========================
+  <div id="fireworks" class="fireworks-layer"></div>
 
-  // УВАГА: коли віддаємо клієнтам - ставимо DEBUG = false;
-  let DEBUG = true;
+  <script>
+    // ----- Налаштування -----
+    // DEBUG: true — можна відкривати хоч сто разів, без ліміту по днях.
+    let DEBUG_MODE = true;
 
-  const DAILY_LIMIT_KEY = "myastoriya_wheel_last_spin";
+    const LS_DATE_KEY = "myastoriya_cards_date";
+    const LS_PRIZE_KEY = "myastoriya_cards_prize";
 
-  // Список секторів колеса (візуально)
-  const slices = [
-    { label: "-10% купон", type: "coupon" },
-    { label: "-15% купон", type: "coupon" },
-    { label: "20% на все", type: "20" },
-    { label: "Акційна знижка", type: "coupon" },
-    { label: "-10% купон", type: "coupon" },
-    { label: "20% на все", type: "20" },
-    { label: "Вечеря 2000 грн", type: "dinner" },
-    { label: "-15% купон", type: "coupon" },
-    { label: "Акційна знижка", type: "coupon" },
-    { label: "20% на все", type: "20" },
-    { label: "-10% купон", type: "coupon" },
-    { label: "-15% купон", type: "coupon" }
-  ];
-
-  // Ймовірності:
-  // 85% - coupon, 14% - 20%, 1% - dinner
-  function pickPrizeType() {
-    const r = Math.random();
-    if (r < 0.85) return "coupon";
-    if (r < 0.99) return "20";
-    return "dinner";
-  }
-
-  function canSpinToday() {
-    if (DEBUG) return true;
-    try {
-      const stored = localStorage.getItem(DAILY_LIMIT_KEY);
-      if (!stored) return true;
-      const today = new Date().toISOString().slice(0, 10);
-      return stored !== today;
-    } catch (e) {
-      return true;
-    }
-  }
-
-  function setSpinToday() {
-    try {
-      const today = new Date().toISOString().slice(0, 10);
-      localStorage.setItem(DAILY_LIMIT_KEY, today);
-    } catch (e) {}
-  }
-
-  function updateSpinStatus() {
-    const statusEl = document.getElementById("spinStatus");
-    if (DEBUG) {
-      statusEl.innerHTML =
-        'DEBUG режим: обмеження <strong>вимкнено</strong>, можна крутити скільки завгодно.';
-      return;
-    }
-    try {
-      const stored = localStorage.getItem(DAILY_LIMIT_KEY);
-      const today = new Date().toISOString().slice(0, 10);
-      if (stored === today) {
-        statusEl.innerHTML =
-          "Сьогодні ти вже крутив колесо. Спробуй знову завтра. 🕒";
-      } else {
-        statusEl.innerHTML =
-          "Сьогодні ти ще <strong>не</strong> крутив колесо. Удачі! 🥩";
-      }
-    } catch (e) {
-      statusEl.textContent = "Готово до оберту. Удачі! 🥩";
-    }
-  }
-
-  // =========================
-  // ВЕРСТКА СЕКТОРІВ ТЕКСТОМ
-  // =========================
-
-  function renderSectorLabels() {
-    const container = document.getElementById("sectorLabels");
-    const count = slices.length;
-    const angleStep = 360 / count;
-
-    slices.forEach((slice, index) => {
-      const span = document.createElement("span");
-      span.textContent = slice.label;
-      const angle = angleStep * index + angleStep / 2;
-      const radius = 50; // умовний радіус тексту
-
-      span.style.transform = `
-        rotate(${angle}deg)
-        translate(${radius}px)
-        rotate(${90}deg)
-      `;
-
-      container.appendChild(span);
-    });
-  }
-
-  // =========================
-  // АНІМАЦІЯ КОЛЕСА
-  // =========================
-
-  const wheelEl = document.getElementById("wheel");
-  const spinButton = document.getElementById("spinButton");
-
-  let isSpinning = false;
-  const spinDuration = 5000; // ms
-
-  function pickSliceIndexForType(type) {
-    const candidates = [];
-    slices.forEach((s, idx) => {
-      if (s.type === type) candidates.push(idx);
-    });
-    if (!candidates.length) {
-      return Math.floor(Math.random() * slices.length);
-    }
-    const randomIndex = Math.floor(Math.random() * candidates.length);
-    return candidates[randomIndex];
-  }
-
-  function spinWheel() {
-    if (isSpinning) return;
-
-    if (!canSpinToday()) {
-      alert("Сьогодні ти вже крутив колесо. Спробуй знову завтра ❤️");
-      return;
-    }
-
-    isSpinning = true;
-    spinButton.disabled = true;
-
-    const prizeType = pickPrizeType();
-    const sliceIndex = pickSliceIndexForType(prizeType);
-
-    const sliceAngle = 360 / slices.length;
-    const sliceCenterAngle = sliceAngle * sliceIndex + sliceAngle / 2;
-
-    const extraSpins = 6; // кількість повних обертів
-    const finalRotation = extraSpins * 360 - sliceCenterAngle;
-
-    wheelEl.style.transition = `transform ${spinDuration}ms cubic-bezier(0.25, 0.9, 0.15, 1)`;
-    wheelEl.style.transform = `rotate(${finalRotation}deg)`;
-
-    // Феєрверки трохи раніше за фініш
-    setTimeout(() => {
-      triggerFireworks();
-    }, spinDuration - 700);
-
-    setTimeout(() => {
-      if (!DEBUG) {
-        setSpinToday();
-      }
-      updateSpinStatus();
-      showWinOverlay(prizeType);
-      isSpinning = false;
-      spinButton.disabled = !canSpinToday() && !DEBUG;
-    }, spinDuration + 80);
-  }
-
-  // =========================
-  // ФЕЄРВЕРКИ
-  // =========================
-
-  const fireworkContainer = document.getElementById("fireworkContainer");
-
-  function triggerFireworks() {
-    if (!fireworkContainer) return;
-
-    const createBurst = (x, y, count, radius) => {
-      for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 * i) / count;
-        const dx = Math.cos(angle) * radius;
-        const dy = Math.sin(angle) * radius;
-
-        const dot = document.createElement("div");
-        dot.className = "firework";
-        dot.style.left = x + "px";
-        dot.style.top = y + "px";
-        dot.style.setProperty("--dx", dx + "px");
-        dot.style.setProperty("--dy", dy + "px");
-
-        const color = i % 3 === 0
-          ? "#fbbf24"
-          : i % 3 === 1
-          ? "#e11d48"
-          : "#f97316";
-        dot.style.background = color;
-        dot.style.boxShadow = `0 0 12px ${color}`;
-
-        fireworkContainer.appendChild(dot);
-
-        dot.addEventListener("animationend", () => {
-          dot.remove();
-        });
+    // Призи + тексти
+    const PRIZES = {
+      coupon: {
+        label: "КУПОН",
+        desc: "Купон на знижку на наступне замовлення. Деталі та умови використання — на сторінці акцій."
+      },
+      d20: {
+        label: "-20%",
+        desc: "Знижка 20% на наступне замовлення в «МʼЯСТОРІЯ». Використай її протягом періоду дії акції."
+      },
+      d30: {
+        label: "-30%",
+        desc: "Щедра знижка 30% на наступне замовлення. Обережно — може спричинити різке бажання стейку."
+      },
+      d60: {
+        label: "-60%",
+        desc: "ГОЛОВНИЙ ПРИЗ! 60% знижки на наступне замовлення. Наш менеджер звʼяжеться з тобою для підтвердження та умов."
       }
     };
 
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-
-    createBurst(vw * 0.3, vh * 0.35, 16, 120);
-    createBurst(vw * 0.7, vh * 0.4, 18, 140);
-    createBurst(vw * 0.5, vh * 0.2, 14, 110);
-  }
-
-  // =========================
-  // ОВЕРЛЕЙ З ВИГРАШЕМ
-  // =========================
-
-  const winOverlay = document.getElementById("winOverlay");
-  const winTitle = document.getElementById("winTitle");
-  const winSubtext = document.getElementById("winSubtext");
-  const winCodeBlock = document.getElementById("winCodeBlock");
-  const winCodeValue = document.getElementById("winCodeValue");
-  const winFooterNote = document.getElementById("winFooterNote");
-
-  const copyCodeBtn = document.getElementById("copyCodeBtn");
-  const goToPromoBtn = document.getElementById("goToPromoBtn");
-  const closeWinBtn = document.getElementById("closeWinBtn");
-
-  function showWinOverlay(type) {
-    if (!winOverlay) return;
-
-    let title = "";
-    let subtext = "";
-    let showCode = false;
-    let footer = "";
-
-    if (type === "coupon") {
-      title = "Ти отримав купон на знижку 🎁";
-      subtext =
-        "Перейди на сторінку акцій «Мʼясторія» - там вже чекають вигідні пропозиції саме для тебе.";
-      showCode = false;
-      footer =
-        "Для використання пропозицій просто обирай акцію та виконуй умови, зазначені на сайті.";
-    } else if (type === "20") {
-      title = "20% знижка на всю продукцію 🎉";
-      subtext =
-        "Збережи персональний промокод і введи його при оформленні замовлення на сайті «Мʼясторія».";
-      showCode = true;
-      winCodeValue.textContent = "20BF200";
-      footer =
-        "Промокод діє обмежений час. Деталі використання можуть уточнюватися в умовах акцій.";
-    } else {
-      title = "Вечеря в «Мʼясторія» на 2000 грн 🥂";
-      subtext =
-        "Тобі випав щасливий сертифікат на вечерю для двох. Найближчим часом з тобою звʼяжеться команда «Мʼясторія» для уточнення деталей.";
-      showCode = false;
-      footer =
-        "Будь ласка, збережи цю сторінку або зроби скриншот, щоб підтвердити виграш при контакті з оператором.";
+    // Ймовірності:
+    // 70% — coupon, 20% — -20%, 9% — -30%, 1% — -60%
+    function choosePrizeType() {
+      const r = Math.random();
+      if (r < 0.70) return "coupon";
+      if (r < 0.90) return "d20";
+      if (r < 0.99) return "d30";
+      return "d60"; // ≈ 1%
     }
 
-    winTitle.textContent = title;
-    winSubtext.textContent = subtext;
-    winCodeBlock.style.display = showCode ? "flex" : "none";
-    winFooterNote.textContent = footer;
+    function todayKey() {
+      return new Date().toISOString().slice(0, 10);
+    }
 
-    winOverlay.classList.add("visible");
-  }
+    function hasPlayedToday() {
+      if (DEBUG_MODE) return false;
+      try {
+        const stored = localStorage.getItem(LS_DATE_KEY);
+        return stored === todayKey();
+      } catch (e) {
+        return false;
+      }
+    }
 
-  function hideWinOverlay() {
-    winOverlay.classList.remove("visible");
-  }
+    function lockToday(prizeType) {
+      try {
+        localStorage.setItem(LS_DATE_KEY, todayKey());
+        localStorage.setItem(LS_PRIZE_KEY, prizeType);
+      } catch (e) {}
+    }
 
-  if (closeWinBtn) {
-    closeWinBtn.addEventListener("click", hideWinOverlay);
-  }
+    function getStoredPrize() {
+      try {
+        return localStorage.getItem(LS_PRIZE_KEY);
+      } catch (e) {
+        return null;
+      }
+    }
 
-  if (goToPromoBtn) {
-    goToPromoBtn.addEventListener("click", () => {
-      window.open("https://myastoriya.com.ua/ua/actions/", "_blank");
-    });
-  }
+    // ----- UI helpers -----
+    const statusEl = document.getElementById("statusText");
+    const toastEl = document.getElementById("toast");
+    const toastTextEl = document.getElementById("toastText");
+    const fireworksLayer = document.getElementById("fireworks");
+    const debugToggle = document.getElementById("debugToggle");
 
-  if (copyCodeBtn) {
-    copyCodeBtn.addEventListener("click", () => {
-      const code = winCodeValue.textContent.trim();
-      if (!navigator.clipboard) {
-        const tmp = document.createElement("textarea");
-        tmp.value = code;
-        document.body.appendChild(tmp);
-        tmp.select();
-        document.execCommand("copy");
-        tmp.remove();
+    function updateStatusText() {
+      if (DEBUG_MODE) {
+        statusEl.innerHTML =
+          'DEBUG режим: обмеження <strong>вимкнено</strong>, можна відкривати картки скільки завгодно.';
+        return;
+      }
+      if (hasPlayedToday()) {
+        const prize = getStoredPrize();
+        let text = "Сьогодні ти вже відкривав картку.";
+        if (prize && PRIZES[prize]) {
+          text +=
+            " Твій приз: <strong>" + PRIZES[prize].label + "</strong> — " + PRIZES[prize].desc;
+        } else {
+          text += " Повернись завтра, щоб спробувати ще.";
+        }
+        statusEl.innerHTML = text;
       } else {
-        navigator.clipboard.writeText(code).catch(() => {});
+        statusEl.innerHTML =
+          "Сьогодні ти ще <strong>не</strong> відкривав картку. Обирай — удачі! 🥩";
       }
-      copyCodeBtn.textContent = "Скопійовано";
-      setTimeout(() => {
-        copyCodeBtn.textContent = "Скопіювати";
-      }, 1500);
-    });
-  }
-
-  // =========================
-  // DEBUG-ТУМБЛЕР
-  // =========================
-
-  const debugToggle = document.getElementById("debugToggle");
-
-  function refreshDebugChip() {
-    if (!debugToggle) return;
-    if (DEBUG) {
-      debugToggle.classList.remove("off");
-      debugToggle.innerHTML = `
-        <span class="debug-dot"></span>
-        DEBUG: UNLIMITED SPINS
-      `;
-    } else {
-      debugToggle.classList.add("off");
-      debugToggle.innerHTML = `
-        <span class="debug-dot"></span>
-        DEBUG: DAILY LIMIT
-      `;
     }
-  }
 
-  if (debugToggle) {
-    debugToggle.addEventListener("click", () => {
-      DEBUG = !DEBUG;
-      refreshDebugChip();
-      updateSpinStatus();
-      spinButton.disabled = !canSpinToday() && !DEBUG;
-    });
-  }
+    function showToast(message, isError) {
+      toastTextEl.textContent = message;
+      toastEl.classList.toggle("error", !!isError);
+      toastEl.classList.add("visible");
+      setTimeout(() => {
+        toastEl.classList.remove("visible");
+      }, 2600);
+    }
 
-  // =========================
-  // ІНІЦІАЛІЗАЦІЯ
-  // =========================
+    function triggerFireworks() {
+      if (!fireworksLayer) return;
+      const bursts = 3;
+      for (let b = 0; b < bursts; b++) {
+        const centerX = window.innerWidth * (0.3 + 0.4 * Math.random());
+        const centerY = window.innerHeight * (0.25 + 0.3 * Math.random());
+        const count = 16 + Math.floor(Math.random() * 8);
+        const radius = 80 + Math.random() * 60;
 
-  document.addEventListener("DOMContentLoaded", () => {
-    renderSectorLabels();
-    refreshDebugChip();
-    updateSpinStatus();
+        for (let i = 0; i < count; i++) {
+          const angle = (Math.PI * 2 * i) / count;
+          const dx = Math.cos(angle) * radius;
+          const dy = Math.sin(angle) * radius;
 
-    spinButton.disabled = !canSpinToday() && !DEBUG;
-    spinButton.addEventListener("click", spinWheel);
+          const dot = document.createElement("div");
+          dot.className = "firework-dot";
+          dot.style.left = centerX + "px";
+          dot.style.top = centerY + "px";
+          dot.style.setProperty("--dx", dx + "px");
+          dot.style.setProperty("--dy", dy + "px");
 
-    winOverlay.addEventListener("click", (e) => {
-      if (e.target === winOverlay) {
-        hideWinOverlay();
+          const color =
+            i % 3 === 0 ? "#f97316" : i % 3 === 1 ? "#facc15" : "#ef4444";
+          dot.style.background = color;
+          dot.style.boxShadow = "0 0 12px " + color;
+
+          fireworksLayer.appendChild(dot);
+          dot.addEventListener("animationend", () => dot.remove());
+        }
       }
+    }
+
+    // ----- Логіка карт -----
+
+    const cards = Array.from(document.querySelectorAll(".card"));
+
+    function disableAllCards() {
+      cards.forEach(card => {
+        card.classList.add("card-disabled");
+      });
+    }
+
+    function enableAllCards() {
+      cards.forEach(card => {
+        card.classList.remove("card-disabled");
+      });
+    }
+
+    function applyPrizeToCard(card, prizeType) {
+      const config = PRIZES[prizeType];
+      if (!config) return;
+      const mainEl = card.querySelector(".card-prize-main");
+      const descEl = card.querySelector(".card-prize-desc");
+      if (mainEl) mainEl.textContent = config.label;
+      if (descEl) descEl.textContent = config.desc;
+    }
+
+    function handleCardClick(event) {
+      const card = event.currentTarget;
+      if (card.classList.contains("card-open")) return;
+
+      if (!DEBUG_MODE && hasPlayedToday()) {
+        showToast("Сьогодні картку вже відкривали з цього пристрою.", true);
+        disableAllCards();
+        updateStatusText();
+        return;
+      }
+
+      const prizeType = choosePrizeType();
+      applyPrizeToCard(card, prizeType);
+      card.classList.add("card-open");
+
+      if (!DEBUG_MODE) {
+        lockToday(prizeType);
+        disableAllCards();
+      }
+
+      updateStatusText();
+
+      if (prizeType === "d60") {
+        triggerFireworks();
+        showToast("Головний приз! -60% на наступне замовлення 🎉", false);
+      } else {
+        showToast("Готово! Дивись, що випало на твоїй картці.", false);
+      }
+    }
+
+    cards.forEach(card => {
+      card.addEventListener("click", handleCardClick);
     });
-  });
-</script>
+
+    // ----- Debug toggle -----
+
+    function updateDebugPill() {
+      if (!debugToggle) return;
+      if (DEBUG_MODE) {
+        debugToggle.classList.remove("off");
+        debugToggle.innerHTML = `
+          <span class="debug-pill-dot"></span>
+          DEBUG: unlimited
+        `;
+        enableAllCards();
+      } else {
+        debugToggle.classList.add("off");
+        debugToggle.innerHTML = `
+          <span class="debug-pill-dot"></span>
+          DEBUG: daily limit
+        `;
+        if (hasPlayedToday()) disableAllCards();
+      }
+    }
+
+    debugToggle.addEventListener("click", () => {
+      DEBUG_MODE = !DEBUG_MODE;
+      updateDebugPill();
+      updateStatusText();
+      showToast(
+        DEBUG_MODE ? "DEBUG увімкнено: обмеження вимкнено." : "DEBUG вимкнено: діє 1 карта на день.",
+        false
+      );
+    });
+
+    // ----- Init -----
+    document.addEventListener("DOMContentLoaded", () => {
+      updateDebugPill();
+      updateStatusText();
+      if (!DEBUG_MODE && hasPlayedToday()) disableAllCards();
+    });
+  </script>
 </body>
 </html>
-
