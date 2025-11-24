@@ -7,15 +7,17 @@
 
   <style>
     :root {
+      --bg-gradient: radial-gradient(circle at top, #fff7ed 0, #f3e4d4 35%, #e1c6ad 70%, #2c1810 100%);
+      --panel-bg: rgba(255, 255, 255, 0.92);
+      --panel-border: rgba(255, 255, 255, 0.8);
+      --panel-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+
       --my-red: #d62828;
       --my-red-dark: #7b1515;
       --my-cream: #f6f1ea;
-      --my-cream-light: #fbf7f0;
-      --my-brown: #3c2415;
-      --my-gold: #c79b4b;
-      --my-text: #221711;
       --my-muted: #7a6b60;
-      --shadow-soft: 0 18px 40px rgba(0,0,0,0.22);
+      --my-text: #221711;
+      --my-gold: #c79b4b;
     }
 
     * {
@@ -26,197 +28,199 @@
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
       min-height: 100vh;
-      background:
-        repeating-linear-gradient(
-          135deg,
-          #fdf7f1 0,
-          #fdf7f1 14px,
-          #f3e3d7 14px,
-          #f3e3d7 28px
-        );
+      background: var(--bg-gradient);
+      color: var(--my-text);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px 12px;
-      color: var(--my-text);
     }
 
-    .page-shell {
+    .app {
       width: 100%;
-      max-width: 1100px;
-      background: rgba(255,255,255,0.96);
-      border-radius: 24px;
-      box-shadow: var(--shadow-soft);
+      max-width: 1120px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: var(--panel-shadow);
       overflow: hidden;
+      backdrop-filter: blur(14px);
     }
 
-    .page-header {
-      background: #111;
-      padding: 14px 18px;
+    /* HEADER */
+
+    .top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 16px;
+      padding: 10px 18px;
+      background: rgba(0,0,0,0.92);
     }
 
-    .brand-block {
+    .brand {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .brand-logo-wrap {
-      width: 120px;
+    .brand-logo {
+      width: 130px;
       max-width: 36vw;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
     }
 
-    .brand-logo-wrap img {
+    .brand-logo img {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    .brand-text {
-      color: #f9f5ee;
+    .brand-caption {
       font-size: 11px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      opacity: 0.8;
+      color: rgba(249, 245, 235, 0.8);
     }
 
-    .debug-pill {
-      font-size: 10px;
-      padding: 4px 9px;
+    .debug-toggle {
       border-radius: 999px;
       border: 1px dashed rgba(255,255,255,0.5);
-      color: #fefce8;
+      padding: 4px 10px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      background: rgba(0,0,0,0.3);
+      color: #f9fafb;
+      background: rgba(0,0,0,0.4);
     }
 
-    .debug-pill-dot {
+    .debug-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #22c55e;
-      box-shadow: 0 0 8px rgba(34,197,94,0.7);
+      box-shadow: 0 0 10px rgba(34,197,94,0.9);
     }
 
-    .debug-pill.off .debug-pill-dot {
+    .debug-toggle.off .debug-dot {
       background: #9ca3af;
       box-shadow: none;
     }
 
-    .debug-pill.off {
-      opacity: 0.7;
+    .debug-toggle.off {
+      opacity: 0.75;
     }
 
     @media (max-width: 640px) {
-      .page-header {
+      .top-bar {
         flex-direction: column;
         align-items: flex-start;
       }
     }
 
-    .page-body {
-      padding: 22px 22px 20px;
+    /* MAIN LAYOUT */
+
+    .main {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
       gap: 22px;
-      align-items: flex-start;
+      padding: 22px 22px 20px;
     }
 
     @media (max-width: 900px) {
-      .page-body {
+      .main {
         grid-template-columns: minmax(0, 1fr);
       }
     }
 
-    .intro {
-      padding-right: 8px;
+    .panel {
+      border-radius: 20px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.16);
+      padding: 18px 18px 16px;
     }
 
-    .tag {
+    /* LEFT INFO PANEL */
+
+    .tagline {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 4px 10px;
       border-radius: 999px;
-      background: rgba(214,40,40,0.05);
-      border: 1px solid rgba(214,40,40,0.18);
+      background: rgba(214,40,40,0.06);
+      border: 1px solid rgba(214,40,40,0.25);
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       color: var(--my-red);
       margin-bottom: 10px;
     }
 
-    .tag-dot {
+    .tagline-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: var(--my-red);
     }
 
-    .intro h1 {
+    h1 {
       margin: 0 0 8px;
       font-size: clamp(22px, 3vw, 28px);
       line-height: 1.15;
-      color: var(--my-brown);
+      color: #311a11;
     }
 
-    .intro-sub {
+    .subtitle {
       font-size: 14px;
       color: var(--my-muted);
-      max-width: 480px;
       line-height: 1.6;
       margin: 0 0 14px;
+      max-width: 480px;
     }
 
-    .list {
+    .info-list {
       list-style: none;
       padding: 0;
       margin: 0 0 14px;
       font-size: 13px;
-      color: #443328;
     }
 
-    .list li {
+    .info-list li {
       display: flex;
       gap: 8px;
       margin-bottom: 6px;
+      color: #4b3527;
     }
 
-    .list-bullet {
+    .info-bullet {
       width: 7px;
       height: 7px;
-      border-radius: 50%;
+      border-radius: 999px;
       border: 2px solid var(--my-red);
       margin-top: 5px;
     }
 
     .prob-box {
-      margin-top: 8px;
+      margin-top: 6px;
       padding: 10px 12px;
       border-radius: 14px;
-      background: var(--my-cream-light);
+      background: #f7eee3;
+      border: 1px dashed rgba(0,0,0,0.1);
       font-size: 12px;
       color: var(--my-muted);
-      border: 1px dashed rgba(0,0,0,0.12);
     }
+
     .prob-row {
       margin-top: 3px;
     }
+
     .prob-row strong {
-      color: var(--my-brown);
+      color: #312016;
     }
 
     .status {
@@ -224,23 +228,43 @@
       font-size: 12px;
       color: var(--my-muted);
     }
+
     .status strong {
       color: var(--my-red-dark);
     }
 
-    /* GRID КАРТОК */
-
-    .grid-wrap {
-      background: var(--my-cream-light);
-      border-radius: 20px;
-      padding: 18px 16px 16px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-      border: 1px solid rgba(0,0,0,0.06);
-      position: relative;
+    .result-box {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #111827;
+      color: #e5e7eb;
+      font-size: 12px;
     }
 
-    .grid-title {
-      font-size: 13px;
+    .result-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .result-main {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .result-desc {
+      font-size: 12px;
+      color: #e5e7eb;
+    }
+
+    /* RIGHT GRID PANEL */
+
+    .grid-header {
+      font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--my-muted);
@@ -253,7 +277,7 @@
       gap: 10px;
     }
 
-    @media (max-width: 450px) {
+    @media (max-width: 480px) {
       .card-grid {
         gap: 8px;
       }
@@ -261,7 +285,6 @@
 
     .card {
       position: relative;
-      width: 100%;
       padding-top: 100%; /* квадрат */
       perspective: 900px;
       cursor: pointer;
@@ -270,35 +293,37 @@
     .card-inner {
       position: absolute;
       inset: 0;
-      border-radius: 14px;
+      border-radius: 16px;
       transform-style: preserve-3d;
       transition: transform 0.6s cubic-bezier(0.22, 0.77, 0.3, 1.02);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.16);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
     .card-front,
     .card-back {
       position: absolute;
       inset: 0;
-      border-radius: 14px;
+      border-radius: 16px;
       backface-visibility: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
     }
 
     .card-front {
-      background: radial-gradient(circle at 30% 20%, #ffffff 0, #f9ebe0 40%, #f0d0bd 70%, #e2b29a 100%);
-      border: 2px solid #fff6ec;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff 0, #f7ece3 36%, #f0d0bd 70%, #e1b49b 100%);
+      border: 2px solid #fff7ec;
       box-shadow:
-        inset 0 0 0 1px rgba(0,0,0,0.08),
-        0 6px 14px rgba(0,0,0,0.2);
-      color: var(--my-brown);
+        inset 0 0 0 1px rgba(0,0,0,0.06),
+        0 10px 20px rgba(0,0,0,0.3);
+      color: #3a2014;
       flex-direction: column;
-      gap: 4px;
-      text-transform: uppercase;
+      gap: 6px;
       font-size: 11px;
       letter-spacing: 0.16em;
+      text-transform: uppercase;
       font-weight: 700;
     }
 
@@ -315,18 +340,17 @@
     }
 
     .card-back {
-      background: radial-gradient(circle at 30% 20%, #fff7e6 0, #f9e0b8 45%, #f2b763 100%);
       transform: rotateY(180deg);
+      background:
+        radial-gradient(circle at 30% 20%, #fff7e6 0, #f7d59a 45%, #f0b25c 100%);
       border: 2px solid #fef9e6;
       box-shadow:
         inset 0 0 0 1px rgba(0,0,0,0.1),
-        0 6px 16px rgba(0,0,0,0.25);
+        0 10px 22px rgba(0,0,0,0.35);
       padding: 10px;
-      text-align: center;
-      color: #2b1604;
       flex-direction: column;
-      justify-content: center;
       gap: 6px;
+      color: #2b1604;
     }
 
     .card-prize-label {
@@ -339,7 +363,7 @@
     .card-prize-main {
       font-size: 20px;
       font-weight: 800;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
     }
 
@@ -354,7 +378,7 @@
 
     .card-disabled {
       cursor: default;
-      opacity: 0.6;
+      opacity: 0.55;
     }
 
     .grid-footer {
@@ -363,7 +387,7 @@
       color: var(--my-muted);
     }
 
-    /* ТОСТ / ПОВІДОМЛЕННЯ */
+    /* TOAST */
 
     .toast {
       position: fixed;
@@ -378,7 +402,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 14px 32px rgba(0,0,0,0.6);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.7);
       opacity: 0;
       transition: transform 0.25s ease-out, opacity 0.25s ease-out;
       z-index: 1000;
@@ -400,7 +424,7 @@
       background: #ef4444;
     }
 
-    /* ФЕЄРВЕРКИ */
+    /* FIREWORKS */
 
     .fireworks-layer {
       position: fixed;
@@ -422,7 +446,7 @@
 
     @keyframes fireworks {
       0% {
-        transform: translate(0,0) scale(0.5);
+        transform: translate(0,0) scale(0.4);
         opacity: 0;
       }
       10% {
@@ -436,45 +460,46 @@
         opacity: 0;
       }
     }
-
   </style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="page-header">
-      <div class="brand-block">
-        <div class="brand-logo-wrap">
-          <img src="https://myastoriya.com.ua/frontend/myastoriya/dist/images/logo.png" alt="МʼЯСТОРІЯ" />
+  <div class="app">
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="https://myastoriya.com.ua/frontend/myastoriya/dist/images/logo.png" alt="МʼЯСТОРІЯ">
         </div>
-        <div class="brand-text">Спеціальний розіграш для гостей онлайн</div>
+        <div class="brand-caption">онлайн-розіграш для гостей</div>
       </div>
 
-      <button id="debugToggle" class="debug-pill">
-        <span class="debug-pill-dot"></span>
+      <button id="debugToggle" class="debug-toggle">
+        <span class="debug-dot"></span>
         DEBUG: unlimited
       </button>
     </header>
 
-    <main class="page-body">
-      <section class="intro">
-        <div class="tag">
-          <span class="tag-dot"></span>
-          Подарункові картки «МʼЯСТОРІЯ»
+    <main class="main">
+      <!-- LEFT PANEL -->
+      <section class="panel">
+        <div class="tagline">
+          <span class="tagline-dot"></span>
+          подарункові картки «мʼясторія»
         </div>
 
         <h1>Обери одну з&nbsp;9 карток та відкрий свій мʼясний бонус</h1>
-        <p class="intro-sub">
-          На екрані — девʼять закритих карток. Вибери одну, клікни — і дізнайся, яку знижку отримаєш на наступне замовлення в «МʼЯСТОРІЯ».
+        <p class="subtitle">
+          На екрані — девʼять закритих карток. Обери будь-яку, натисни — і дізнайся,
+          яку знижку отримаєш на наступне замовлення в «МʼЯСТОРІЯ».
         </p>
 
-        <ul class="list">
+        <ul class="info-list">
           <li>
-            <div class="list-bullet"></div>
-            <div>Можна відкрити лише <strong>одну картку на день</strong> з цього пристрою.</div>
+            <div class="info-bullet"></div>
+            <div>У реальному режимі можна відкрити лише <strong>одну картку на день</strong> з цього пристрою.</div>
           </li>
           <li>
-            <div class="list-bullet"></div>
-            <div>Після відкриття картки ми покажемо твій приз і підкажемо, як ним скористатися.</div>
+            <div class="info-bullet"></div>
+            <div>Після відкриття ми покажемо твій приз і підкажемо, як ним скористатися.</div>
           </li>
         </ul>
 
@@ -492,12 +517,22 @@
         <div id="statusText" class="status">
           Сьогодні ти ще <strong>не</strong> відкривав картку. Обирай — удачі! 🥩
         </div>
+
+        <div class="result-box">
+          <div class="result-title">Ваш сьогоднішній приз</div>
+          <div id="resultMain" class="result-main">Ще не обрано картку</div>
+          <div id="resultDesc" class="result-desc">
+            Натисни на одну з карток праворуч, щоб відкрити свій бонус.
+          </div>
+        </div>
       </section>
 
-      <section class="grid-wrap">
-        <div class="grid-title">Натисни на будь-яку картку, щоб відкрити її</div>
+      <!-- RIGHT PANEL -->
+      <section class="panel">
+        <div class="grid-header">Натисни на одну картку, щоб відкрити її</div>
         <div id="cardGrid" class="card-grid">
-          <!-- 9 карток -->
+          <!-- 9 cards -->
+          <!-- шаблон повторюється; кожна має data-index -->
           <div class="card" data-index="0">
             <div class="card-inner">
               <div class="card-front">
@@ -635,7 +670,8 @@
         </div>
 
         <div class="grid-footer">
-          Після відкриття картки інші залишаться закритими до наступного дня (для клієнтів; в DEBUG-режимі — без обмежень).
+          Після відкриття картки інші залишаться закритими до наступного дня
+          (в продакшн-режимі; у DEBUG — без обмежень).
         </div>
       </section>
     </main>
@@ -646,44 +682,51 @@
     <span id="toastText"></span>
   </div>
 
-  <div id="fireworks" class="fireworks-layer"></div>
+  <div id="fireworksLayer" class="fireworks-layer"></div>
 
   <script>
-    // ----- Налаштування -----
-    // DEBUG: true — можна відкривати хоч сто разів, без ліміту по днях.
-    let DEBUG_MODE = true;
+    // ---------- CONFIG ----------
+    let DEBUG_MODE = true; // Коли будеш запускати для клієнтів — постав false
 
-    const LS_DATE_KEY = "myastoriya_cards_date";
-    const LS_PRIZE_KEY = "myastoriya_cards_prize";
+    const DATE_KEY = "myastoriya_cards_date";
+    const PRIZE_KEY = "myastoriya_cards_prize";
 
-    // Призи + тексти
     const PRIZES = {
       coupon: {
         label: "КУПОН",
-        desc: "Купон на знижку на наступне замовлення. Деталі та умови використання — на сторінці акцій."
+        desc: "Купон на знижку на наступне замовлення. Деталі та умови використання — на сторінці акцій «МʼЯСТОРІЯ»."
       },
       d20: {
         label: "-20%",
-        desc: "Знижка 20% на наступне замовлення в «МʼЯСТОРІЯ». Використай її протягом періоду дії акції."
+        desc: "Знижка 20% на наступне замовлення. Введи промокод або виконай умови акції на сайті."
       },
       d30: {
         label: "-30%",
-        desc: "Щедра знижка 30% на наступне замовлення. Обережно — може спричинити різке бажання стейку."
+        desc: "Щедра знижка 30% на наступне замовлення. Чудовий привід спробувати новий стейк."
       },
       d60: {
         label: "-60%",
-        desc: "ГОЛОВНИЙ ПРИЗ! 60% знижки на наступне замовлення. Наш менеджер звʼяжеться з тобою для підтвердження та умов."
+        desc: "ГОЛОВНИЙ ПРИЗ! 60% знижки на наступне замовлення. Збережи цей екран — наш менеджер може попросити підтвердження виграшу."
       }
     };
 
-    // Ймовірності:
-    // 70% — coupon, 20% — -20%, 9% — -30%, 1% — -60%
-    function choosePrizeType() {
-      const r = Math.random();
-      if (r < 0.70) return "coupon";
-      if (r < 0.90) return "d20";
-      if (r < 0.99) return "d30";
-      return "d60"; // ≈ 1%
+    // Ваги ймовірностей: 70% купон, 20% -20, 9% -30, 1% -60
+    const WEIGHTS = [
+      { type: "coupon", weight: 70 },
+      { type: "d20", weight: 20 },
+      { type: "d30", weight: 9 },
+      { type: "d60", weight: 1 }
+    ];
+
+    function weightedRandom() {
+      const total = WEIGHTS.reduce((s, w) => s + w.weight, 0);
+      const r = Math.random() * total;
+      let acc = 0;
+      for (const w of WEIGHTS) {
+        acc += w.weight;
+        if (r <= acc) return w.type;
+      }
+      return WEIGHTS[0].type;
     }
 
     function todayKey() {
@@ -693,8 +736,7 @@
     function hasPlayedToday() {
       if (DEBUG_MODE) return false;
       try {
-        const stored = localStorage.getItem(LS_DATE_KEY);
-        return stored === todayKey();
+        return localStorage.getItem(DATE_KEY) === todayKey();
       } catch (e) {
         return false;
       }
@@ -702,46 +744,64 @@
 
     function lockToday(prizeType) {
       try {
-        localStorage.setItem(LS_DATE_KEY, todayKey());
-        localStorage.setItem(LS_PRIZE_KEY, prizeType);
+        localStorage.setItem(DATE_KEY, todayKey());
+        localStorage.setItem(PRIZE_KEY, prizeType);
       } catch (e) {}
     }
 
     function getStoredPrize() {
       try {
-        return localStorage.getItem(LS_PRIZE_KEY);
+        return localStorage.getItem(PRIZE_KEY);
       } catch (e) {
         return null;
       }
     }
 
-    // ----- UI helpers -----
+    // ---------- UI ELEMENTS ----------
+    const cards = Array.from(document.querySelectorAll(".card"));
     const statusEl = document.getElementById("statusText");
+    const resultMainEl = document.getElementById("resultMain");
+    const resultDescEl = document.getElementById("resultDesc");
     const toastEl = document.getElementById("toast");
     const toastTextEl = document.getElementById("toastText");
-    const fireworksLayer = document.getElementById("fireworks");
+    const fireworksLayer = document.getElementById("fireworksLayer");
     const debugToggle = document.getElementById("debugToggle");
 
-    function updateStatusText() {
+    // ---------- HELPERS ----------
+    function updateStatus() {
       if (DEBUG_MODE) {
         statusEl.innerHTML =
           'DEBUG режим: обмеження <strong>вимкнено</strong>, можна відкривати картки скільки завгодно.';
         return;
       }
       if (hasPlayedToday()) {
-        const prize = getStoredPrize();
-        let text = "Сьогодні ти вже відкривав картку.";
-        if (prize && PRIZES[prize]) {
-          text +=
-            " Твій приз: <strong>" + PRIZES[prize].label + "</strong> — " + PRIZES[prize].desc;
+        const storedPrize = getStoredPrize();
+        if (storedPrize && PRIZES[storedPrize]) {
+          const p = PRIZES[storedPrize];
+          statusEl.innerHTML =
+            "Сьогодні картку вже відкривали. Твій приз: <strong>" +
+            p.label +
+            "</strong> — " +
+            p.desc;
         } else {
-          text += " Повернись завтра, щоб спробувати ще.";
+          statusEl.innerHTML =
+            "Сьогодні картку вже відкривали. Повернись завтра, щоб спробувати ще раз.";
         }
-        statusEl.innerHTML = text;
       } else {
         statusEl.innerHTML =
           "Сьогодні ти ще <strong>не</strong> відкривав картку. Обирай — удачі! 🥩";
       }
+    }
+
+    function setResult(prizeType) {
+      if (!prizeType || !PRIZES[prizeType]) {
+        resultMainEl.textContent = "Ще не обрано картку";
+        resultDescEl.textContent = "Натисни на одну з карток праворуч, щоб відкрити свій бонус.";
+        return;
+      }
+      const p = PRIZES[prizeType];
+      resultMainEl.textContent = p.label;
+      resultDescEl.textContent = p.desc;
     }
 
     function showToast(message, isError) {
@@ -757,8 +817,8 @@
       if (!fireworksLayer) return;
       const bursts = 3;
       for (let b = 0; b < bursts; b++) {
-        const centerX = window.innerWidth * (0.3 + 0.4 * Math.random());
-        const centerY = window.innerHeight * (0.25 + 0.3 * Math.random());
+        const cx = window.innerWidth * (0.3 + 0.4 * Math.random());
+        const cy = window.innerHeight * (0.25 + 0.35 * Math.random());
         const count = 16 + Math.floor(Math.random() * 8);
         const radius = 80 + Math.random() * 60;
 
@@ -769,10 +829,10 @@
 
           const dot = document.createElement("div");
           dot.className = "firework-dot";
-          dot.style.left = centerX + "px";
-          dot.style.top = centerY + "px";
+          dot.style.left = cx + "px";
+          dot.style.top = cy + "px";
           dot.style.setProperty("--dx", dx + "px");
-          dot.style.setProperty("--dy", dy + "px");
+          dot.style.setProperty("--dy", dy + "px";
 
           const color =
             i % 3 === 0 ? "#f97316" : i % 3 === 1 ? "#facc15" : "#ef4444";
@@ -785,52 +845,47 @@
       }
     }
 
-    // ----- Логіка карт -----
-
-    const cards = Array.from(document.querySelectorAll(".card"));
-
     function disableAllCards() {
-      cards.forEach(card => {
-        card.classList.add("card-disabled");
-      });
+      cards.forEach(card => card.classList.add("card-disabled"));
     }
 
     function enableAllCards() {
-      cards.forEach(card => {
-        card.classList.remove("card-disabled");
-      });
+      cards.forEach(card => card.classList.remove("card-disabled"));
     }
 
     function applyPrizeToCard(card, prizeType) {
-      const config = PRIZES[prizeType];
-      if (!config) return;
+      const cfg = PRIZES[prizeType];
+      if (!cfg) return;
       const mainEl = card.querySelector(".card-prize-main");
       const descEl = card.querySelector(".card-prize-desc");
-      if (mainEl) mainEl.textContent = config.label;
-      if (descEl) descEl.textContent = config.desc;
+      if (mainEl) mainEl.textContent = cfg.label;
+      if (descEl) descEl.textContent = cfg.desc;
     }
 
-    function handleCardClick(event) {
-      const card = event.currentTarget;
+    // ---------- CARD CLICK ----------
+    function onCardClick(e) {
+      const card = e.currentTarget;
       if (card.classList.contains("card-open")) return;
 
       if (!DEBUG_MODE && hasPlayedToday()) {
         showToast("Сьогодні картку вже відкривали з цього пристрою.", true);
         disableAllCards();
-        updateStatusText();
+        updateStatus();
         return;
       }
 
-      const prizeType = choosePrizeType();
+      const prizeType = weightedRandom();
+
       applyPrizeToCard(card, prizeType);
       card.classList.add("card-open");
+      setResult(prizeType);
 
       if (!DEBUG_MODE) {
         lockToday(prizeType);
         disableAllCards();
       }
 
-      updateStatusText();
+      updateStatus();
 
       if (prizeType === "d60") {
         triggerFireworks();
@@ -840,47 +895,49 @@
       }
     }
 
-    cards.forEach(card => {
-      card.addEventListener("click", handleCardClick);
-    });
+    cards.forEach(card => card.addEventListener("click", onCardClick));
 
-    // ----- Debug toggle -----
-
-    function updateDebugPill() {
+    // ---------- DEBUG TOGGLE ----------
+    function refreshDebugToggle() {
       if (!debugToggle) return;
       if (DEBUG_MODE) {
         debugToggle.classList.remove("off");
-        debugToggle.innerHTML = `
-          <span class="debug-pill-dot"></span>
-          DEBUG: unlimited
-        `;
+        debugToggle.innerHTML = '<span class="debug-dot"></span>DEBUG: unlimited';
         enableAllCards();
       } else {
         debugToggle.classList.add("off");
-        debugToggle.innerHTML = `
-          <span class="debug-pill-dot"></span>
-          DEBUG: daily limit
-        `;
+        debugToggle.innerHTML = '<span class="debug-dot"></span>DEBUG: daily limit';
         if (hasPlayedToday()) disableAllCards();
       }
     }
 
     debugToggle.addEventListener("click", () => {
       DEBUG_MODE = !DEBUG_MODE;
-      updateDebugPill();
-      updateStatusText();
+      refreshDebugToggle();
+      updateStatus();
       showToast(
-        DEBUG_MODE ? "DEBUG увімкнено: обмеження вимкнено." : "DEBUG вимкнено: діє 1 карта на день.",
+        DEBUG_MODE
+          ? "DEBUG увімкнено: обмеження вимкнено."
+          : "DEBUG вимкнено: діє 1 картка на день.",
         false
       );
     });
 
-    // ----- Init -----
-    document.addEventListener("DOMContentLoaded", () => {
-      updateDebugPill();
-      updateStatusText();
-      if (!DEBUG_MODE && hasPlayedToday()) disableAllCards();
-    });
+    // ---------- INIT ----------
+    (function init() {
+      refreshDebugToggle();
+      updateStatus();
+
+      if (!DEBUG_MODE && hasPlayedToday()) {
+        const storedPrize = getStoredPrize();
+        if (storedPrize && PRIZES[storedPrize]) {
+          setResult(storedPrize);
+        }
+        disableAllCards();
+      } else {
+        setResult(null);
+      }
+    })();
   </script>
 </body>
 </html>
