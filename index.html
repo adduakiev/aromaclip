@@ -531,8 +531,8 @@
       <section class="panel">
         <div class="grid-header">Натисни на одну картку, щоб відкрити її</div>
         <div id="cardGrid" class="card-grid">
-          <!-- 9 cards -->
-          <!-- шаблон повторюється; кожна має data-index -->
+          <!-- 9 карток -->
+          <!-- 0 -->
           <div class="card" data-index="0">
             <div class="card-inner">
               <div class="card-front">
@@ -547,7 +547,7 @@
               </div>
             </div>
           </div>
-
+          <!-- 1 -->
           <div class="card" data-index="1">
             <div class="card-inner">
               <div class="card-front">
@@ -562,7 +562,7 @@
               </div>
             </div>
           </div>
-
+          <!-- 2 -->
           <div class="card" data-index="2">
             <div class="card-inner">
               <div class="card-front">
@@ -577,7 +577,7 @@
               </div>
             </div>
           </div>
-
+          <!-- 3 -->
           <div class="card" data-index="3">
             <div class="card-inner">
               <div class="card-front">
@@ -592,7 +592,7 @@
               </div>
             </div>
           </div>
-
+          <!-- 4 -->
           <div class="card" data-index="4">
             <div class="card-inner">
               <div class="card-front">
@@ -607,7 +607,7 @@
               </div>
             </div>
           </div>
-
+          <!-- 5 -->
           <div class="card" data-index="5">
             <div class="card-inner">
               <div class="card-front">
@@ -622,7 +622,7 @@
               </div>
             </div>
           </div>
-
+          <!-- 6 -->
           <div class="card" data-index="6">
             <div class="card-inner">
               <div class="card-front">
@@ -637,7 +637,7 @@
               </div>
             </div>
           </div>
-
+          <!-- 7 -->
           <div class="card" data-index="7">
             <div class="card-inner">
               <div class="card-front">
@@ -652,7 +652,7 @@
               </div>
             </div>
           </div>
-
+          <!-- 8 -->
           <div class="card" data-index="8">
             <div class="card-inner">
               <div class="card-front">
@@ -796,7 +796,8 @@
     function setResult(prizeType) {
       if (!prizeType || !PRIZES[prizeType]) {
         resultMainEl.textContent = "Ще не обрано картку";
-        resultDescEl.textContent = "Натисни на одну з карток праворуч, щоб відкрити свій бонус.";
+        resultDescEl.textContent =
+          "Натисни на одну з карток праворуч, щоб відкрити свій бонус.";
         return;
       }
       const p = PRIZES[prizeType];
@@ -832,7 +833,7 @@
           dot.style.left = cx + "px";
           dot.style.top = cy + "px";
           dot.style.setProperty("--dx", dx + "px");
-          dot.style.setProperty("--dy", dy + "px";
+          dot.style.setProperty("--dy", dy + "px");
 
           const color =
             i % 3 === 0 ? "#f97316" : i % 3 === 1 ? "#facc15" : "#ef4444";
@@ -902,11 +903,13 @@
       if (!debugToggle) return;
       if (DEBUG_MODE) {
         debugToggle.classList.remove("off");
-        debugToggle.innerHTML = '<span class="debug-dot"></span>DEBUG: unlimited';
+        debugToggle.innerHTML =
+          '<span class="debug-dot"></span>DEBUG: unlimited';
         enableAllCards();
       } else {
         debugToggle.classList.add("off");
-        debugToggle.innerHTML = '<span class="debug-dot"></span>DEBUG: daily limit';
+        debugToggle.innerHTML =
+          '<span class="debug-dot"></span>DEBUG: daily limit';
         if (hasPlayedToday()) disableAllCards();
       }
     }
