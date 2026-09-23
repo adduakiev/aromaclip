@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Aromaclip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#1a1714;--ink:#1e1815;--cream:#f4ede1;--sand:#ebe0cd;--amber:#c19a5b;--brown:#6b5d4a;
+    --serif:"Newsreader",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,monospace;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--serif);background:var(--cream);color:var(--black);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:26px 60px;background:var(--ink);}
+  .logo{font-family:var(--serif);font-size:24px;font-weight:500;color:var(--cream);text-decoration:none;}
+  .nav-right{display:flex;align-items:center;gap:40px;}
+  .nav-links{display:flex;gap:34px;}
+  .nav-links a{font-family:var(--serif);font-size:15px;letter-spacing:.03em;color:var(--cream);text-decoration:none;opacity:.82;}
+  .nav-links a:hover{opacity:1;}
+  .cart{display:flex;color:var(--cream);opacity:.82;position:relative;}
+  .cart-count{position:absolute;top:-9px;right:-11px;min-width:16px;height:16px;padding:0 4px;background:var(--amber);color:var(--black);border-radius:9px;font-family:var(--mono);font-size:10px;display:none;align-items:center;justify-content:center;}
+
+  .co{flex:1;max-width:1120px;width:100%;margin:0 auto;padding:70px 60px 110px;display:grid;grid-template-columns:1.15fr .85fr;gap:76px;}
+  .co h1{font-family:var(--serif);font-weight:400;font-size:46px;letter-spacing:-.02em;margin-bottom:8px;}
+  .breadcrumb{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--brown);margin-bottom:40px;}
+  .breadcrumb a{color:var(--brown);text-decoration:none;}.breadcrumb a:hover{color:var(--black);}
+
+  .co-sec{margin-bottom:40px;}
+  .co-sec .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--amber);display:block;margin-bottom:18px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--brown);margin-bottom:7px;text-transform:uppercase;}
+  .field input,.field select{width:100%;font-family:var(--serif);font-size:16px;color:var(--black);
+    background:#fbf7ef;border:1px solid rgba(107,93,74,.32);padding:14px 16px;outline:none;transition:border-color .25s;}
+  .field input:focus,.field select:focus{border-color:var(--amber);}
+  .field.err input{border-color:#b4502f;}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .frow3{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;}
+  .paynote{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--brown);margin-top:4px;}
+  .place{width:100%;margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--cream);
+    background:var(--black);border:1px solid var(--black);padding:20px;cursor:pointer;transition:background .3s,color .3s;}
+  .place:hover{background:var(--amber);border-color:var(--amber);color:var(--black);}
+  .backlink{display:inline-block;margin-top:22px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--brown);text-decoration:none;}
+  .backlink:hover{color:var(--black);}
+
+  .co-summary{align-self:start;background:var(--sand);padding:38px 36px;}
+  .co-summary h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--brown);font-weight:400;margin-bottom:26px;}
+  .s-row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid rgba(107,93,74,.18);}
+  .s-row svg{width:36px;height:36px;}
+  .s-name{font-family:var(--serif);font-size:17px;}
+  .s-name span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--brown);margin-top:4px;}
+  .s-line{font-family:var(--mono);font-size:13px;}
+  .s-tot{margin-top:24px;font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--brown);}
+  .s-tot div{display:flex;justify-content:space-between;padding:7px 0;}
+  .s-grand{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-top:16px;border-top:1px solid rgba(107,93,74,.28);}
+  .s-grand .l{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--brown);}
+  .s-grand .v{font-family:var(--serif);font-size:30px;}
+
+  footer{background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:space-between;padding:46px 60px;}
+  footer .tagline{font-family:var(--serif);font-style:italic;font-size:20px;}
+  footer .addr{font-family:var(--mono);font-size:11px;letter-spacing:.14em;opacity:.7;}
+
+  @media (max-width:860px){
+    nav{padding:20px 24px;}.nav-links{gap:20px;}.nav-links a{font-size:13px;}.nav-right{gap:22px;}
+    .co{grid-template-columns:1fr;gap:44px;padding:56px 24px 80px;}
+    .co-summary{order:-1;}
+    footer{flex-direction:column;gap:16px;text-align:center;padding:40px 24px;}
+  }
+</style>
+<style>.logo{display:inline-flex;align-items:center;line-height:0}.logo .logo-mark{height:32px;width:auto;display:block}</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo"><svg class="logo-mark" viewBox="0 0 132 96" xmlns="http://www.w3.org/2000/svg" fill="none" role="img" aria-label="Aromaclip"><circle cx="44" cy="48" r="34" stroke="#f4ede1" stroke-width="2.1"/><circle cx="88" cy="48" r="34" stroke="#f4ede1" stroke-width="2.1"/><path d="M66,22.08 L66,40 L59.16,30 A34,34 0 0 1 66,22.08 Z" fill="#c19a5b"/><path d="M66,22.08 A34,34 0 0 1 66,73.92 A34,34 0 0 1 66,22.08 Z" stroke="#f4ede1" stroke-width="2.1"/><path d="M66,22.08 L66,73.92" stroke="#f4ede1" stroke-width="2.1"/><path d="M66,40 L59.16,30" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,40 L72.84,30" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,52 L54.53,42" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,52 L77.47,42" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,64 L54.53,54" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,64 L77.47,54" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/></svg></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html#collection">Shop</a>
+      <a href="story.html">Story</a>
+      <a href="science.html">Science</a>
+      <a href="hotels.html">Hotels</a>
+    </div>
+    <a href="cart.html" class="cart" aria-label="Cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+        <path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+    </a>
+  </div>
+</nav>
+
+<section class="co">
+  <div class="co-form">
+    <div class="breadcrumb"><a href="cart.html">Bag</a> — Checkout</div>
+    <h1>Checkout</h1>
+
+    <form id="coForm" onsubmit="return placeOrder(event)" novalidate>
+      <div class="co-sec">
+        <span class="eyebrow">Contact</span>
+        <div class="field"><label>Email</label><input type="email" name="email" placeholder="name@email.com" required></div>
+      </div>
+
+      <div class="co-sec">
+        <span class="eyebrow">Shipping address</span>
+        <div class="frow">
+          <div class="field"><label>First name</label><input name="fname" required></div>
+          <div class="field"><label>Last name</label><input name="lname" required></div>
+        </div>
+        <div class="field"><label>Address</label><input name="address" placeholder="Street and number" required></div>
+        <div class="field"><label>Apartment, suite (optional)</label><input name="apt"></div>
+        <div class="frow3">
+          <div class="field"><label>City</label><input name="city" required></div>
+          <div class="field"><label>Postal code</label><input name="zip" required></div>
+        </div>
+        <div class="field"><label>Country</label>
+          <select name="country">
+            <option>Germany</option><option>Austria</option><option>France</option>
+            <option>Netherlands</option><option>Poland</option><option>Ukraine</option>
+            <option>Other (EU)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="co-sec">
+        <span class="eyebrow">Payment</span>
+        <div class="field"><label>Card number</label><input name="card" inputmode="numeric" placeholder="1234 5678 9012 3456" required></div>
+        <div class="frow">
+          <div class="field"><label>Expiry (MM/YY)</label><input name="exp" placeholder="08/28" required></div>
+          <div class="field"><label>CVC</label><input name="cvc" inputmode="numeric" placeholder="123" required></div>
+        </div>
+        <div class="field"><label>Name on card</label><input name="cardname" required></div>
+        <p class="paynote">This is a prototype — no payment is processed and no card data is stored.</p>
+      </div>
+
+      <button class="place" id="placeBtn" type="submit">Place order</button>
+      <a class="backlink" href="cart.html">Return to bag</a>
+    </form>
+  </div>
+
+  <aside class="co-summary">
+    <h2>Order summary</h2>
+    <div id="sItems"></div>
+    <div class="s-tot">
+      <div><span>Subtotal</span><span id="sSub">€0</span></div>
+      <div><span>Shipping</span><span>Free</span></div>
+    </div>
+    <div class="s-grand"><span class="l">Total</span><span class="v" id="sTotal">€0</span></div>
+  </aside>
+</section>
+
+<footer>
+  <div class="tagline">Breathe. Feel. Live.</div>
+  <div class="addr">Rhinofilt GmbH · Berlin</div>
+</footer>
+
+<script>
+var K='aromaclip_cart';
+function getCart(){try{return JSON.parse(localStorage.getItem(K))||[]}catch(e){return[]}}
+var ICONS={
+ breathe:'<svg viewBox="0 0 48 48" fill="none" stroke="#c19a5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24,44 C23,35 24,27 25,15"/><g fill="#c19a5b" stroke="none"><ellipse cx="0" cy="0" rx="3" ry="5.6" transform="translate(17.5,35) rotate(-42)"/><ellipse cx="0" cy="0" rx="3" ry="5.6" transform="translate(30,31) rotate(42)"/><ellipse cx="0" cy="0" rx="2.8" ry="5.2" transform="translate(18.5,27) rotate(-38)"/><ellipse cx="0" cy="0" rx="2.8" ry="5.2" transform="translate(30,23) rotate(38)"/><ellipse cx="0" cy="0" rx="2.5" ry="4.6" transform="translate(20.5,19) rotate(-32)"/><ellipse cx="0" cy="0" rx="2.5" ry="4.6" transform="translate(29,15.5) rotate(32)"/><ellipse cx="25" cy="13" rx="2" ry="4"/></g></svg>',
+ focus:'<svg viewBox="0 0 48 48" fill="none" stroke="#c19a5b" stroke-width="2"><circle cx="24" cy="24" r="15.5"/><circle cx="24" cy="24" r="9.5"/><circle cx="24" cy="24" r="3.6"/><circle cx="24" cy="24" r="1.8" fill="#c19a5b"/></svg>',
+ sleep:'<svg viewBox="0 0 48 48" fill="none" stroke="#c19a5b" stroke-width="2" stroke-linejoin="round"><path d="M30.5,10.5 A15,15 0 1 0 30.5,37.5 A11.5,11.5 0 1 1 30.5,10.5 Z"/></svg>',
+ starter:'<svg viewBox="0 0 48 48" fill="none" stroke="#c19a5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8,15 Q16,9 24,15 T40,15"/><path d="M8,24 Q13,20 18,24 T28,24 T38,24"/><path d="M8,34 C13,34 15,28 21,28 C29,28 31,38 40,34"/></svg>'
+};
+function renderSummary(){
+  var c=getCart(),el=document.getElementById('sItems'),sum=0,html='';
+  if(!c.length){location.href='cart.html';return;}
+  c.forEach(function(it){var line=it.price*it.qty;sum+=line;
+    html+='<div class="s-row"><span>'+(ICONS[it.id]||'')+'</span>'
+      +'<div class="s-name">'+it.name+'<span>Qty '+it.qty+'</span></div>'
+      +'<div class="s-line">€'+line+'</div></div>';});
+  el.innerHTML=html;
+  document.getElementById('sSub').textContent='€'+sum;
+  document.getElementById('sTotal').textContent='€'+sum;
+  document.getElementById('placeBtn').textContent='Place order · €'+sum;
+  var b=document.querySelector('.cart-count');if(b){var n=c.reduce(function(s,x){return s+x.qty},0);b.textContent=n;b.style.display=n>0?'flex':'none';}
+}
+function placeOrder(e){
+  e.preventDefault();
+  var f=e.target,ok=true;
+  Array.prototype.forEach.call(f.querySelectorAll('input[required]'),function(i){
+    var wrap=i.closest('.field');
+    if(!i.value.trim()){wrap.classList.add('err');ok=false;}else{wrap.classList.remove('err');}
+  });
+  if(!ok){return false;}
+  var c=getCart(),sum=c.reduce(function(s,x){return s+x.price*x.qty},0);
+  var order={number:'AC-'+Math.floor(100000+Math.random()*900000),
+    email:f.email.value.trim(),
+    name:(f.fname.value+' '+f.lname.value).trim(),
+    address:f.address.value.trim()+', '+f.city.value.trim()+' '+f.zip.value.trim()+', '+f.country.value,
+    items:c,total:sum,date:new Date().toISOString()};
+  localStorage.setItem('aromaclip_lastorder',JSON.stringify(order));
+  localStorage.removeItem(K);
+  location.href='confirmation.html';
+  return false;
+}
+document.addEventListener('DOMContentLoaded',renderSummary);
+</script>
+</body>
+</html>
