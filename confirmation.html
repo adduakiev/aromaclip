@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order confirmed — Aromaclip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#1a1714;--ink:#1e1815;--cream:#f4ede1;--sand:#ebe0cd;--amber:#c19a5b;--brown:#6b5d4a;
+    --serif:"Newsreader",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,monospace;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--serif);background:var(--cream);color:var(--black);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:26px 60px;background:var(--ink);}
+  .logo{font-family:var(--serif);font-size:24px;font-weight:500;color:var(--cream);text-decoration:none;}
+  .nav-right{display:flex;align-items:center;gap:40px;}
+  .nav-links{display:flex;gap:34px;}
+  .nav-links a{font-family:var(--serif);font-size:15px;letter-spacing:.03em;color:var(--cream);text-decoration:none;opacity:.82;}
+  .nav-links a:hover{opacity:1;}
+  .cart{display:flex;color:var(--cream);opacity:.82;}
+
+  .conf{flex:1;max-width:760px;width:100%;margin:0 auto;padding:110px 60px 120px;}
+  .conf .mark{width:56px;height:56px;border:1px solid var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--amber);margin-bottom:34px;}
+  .conf .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--amber);}
+  .conf h1{font-family:var(--serif);font-weight:400;font-size:52px;letter-spacing:-.02em;margin-top:16px;}
+  .conf .lead{font-family:var(--serif);font-size:19px;line-height:1.6;color:var(--brown);margin-top:22px;max-width:520px;}
+  .conf .lead b{color:var(--black);font-weight:500;}
+  .order{margin-top:50px;border-top:1px solid rgba(107,93,74,.24);}
+  .o-row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid rgba(107,93,74,.16);}
+  .o-row svg{width:36px;height:36px;}
+  .o-name{font-family:var(--serif);font-size:18px;}
+  .o-name span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--brown);margin-top:4px;}
+  .o-line{font-family:var(--mono);font-size:13px;}
+  .o-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:22px;}
+  .o-total .l{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--brown);}
+  .o-total .v{font-family:var(--serif);font-size:30px;}
+  .ship{margin-top:40px;font-family:var(--serif);font-size:15px;line-height:1.7;color:var(--brown);}
+  .ship .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--brown);display:block;margin-bottom:6px;text-transform:uppercase;}
+  .actions{margin-top:52px;display:flex;gap:26px;align-items:center;}
+  .btn{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--amber);text-decoration:none;border:1px solid var(--amber);padding:16px 36px;transition:background .35s,color .35s;}
+  .btn:hover{background:var(--amber);color:var(--black);}
+  .lnk{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--brown);text-decoration:none;}
+  .lnk:hover{color:var(--black);}
+  footer{background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:space-between;padding:46px 60px;}
+  footer .tagline{font-family:var(--serif);font-style:italic;font-size:20px;}
+  footer .addr{font-family:var(--mono);font-size:11px;letter-spacing:.14em;opacity:.7;}
+  @media (max-width:760px){nav{padding:20px 24px;}.nav-links{gap:20px;}.nav-links a{font-size:13px;}
+    .conf{padding:80px 24px 90px;}.conf h1{font-size:38px;}.actions{flex-direction:column;align-items:stretch;}
+    .btn{text-align:center;}footer{flex-direction:column;gap:16px;text-align:center;padding:40px 24px;}}
+</style>
+<style>.logo{display:inline-flex;align-items:center;line-height:0}.logo .logo-mark{height:32px;width:auto;display:block}</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo"><svg class="logo-mark" viewBox="0 0 132 96" xmlns="http://www.w3.org/2000/svg" fill="none" role="img" aria-label="Aromaclip"><circle cx="44" cy="48" r="34" stroke="#f4ede1" stroke-width="2.1"/><circle cx="88" cy="48" r="34" stroke="#f4ede1" stroke-width="2.1"/><path d="M66,22.08 L66,40 L59.16,30 A34,34 0 0 1 66,22.08 Z" fill="#c19a5b"/><path d="M66,22.08 A34,34 0 0 1 66,73.92 A34,34 0 0 1 66,22.08 Z" stroke="#f4ede1" stroke-width="2.1"/><path d="M66,22.08 L66,73.92" stroke="#f4ede1" stroke-width="2.1"/><path d="M66,40 L59.16,30" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,40 L72.84,30" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,52 L54.53,42" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,52 L77.47,42" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,64 L54.53,54" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/><path d="M66,64 L77.47,54" stroke="#f4ede1" stroke-width="2.1" stroke-linecap="round"/></svg></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="index.html#collection">Shop</a>
+      <a href="story.html">Story</a>
+      <a href="science.html">Science</a>
+      <a href="hotels.html">Hotels</a>
+    </div>
+    <a href="cart.html" class="cart" aria-label="Cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+        <path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+    </a>
+  </div>
+</nav>
+
+<section class="conf" id="conf">
+  <div class="mark">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 13l4 4L19 7"/></svg>
+  </div>
+  <div class="eyebrow" id="orderNo">Order —</div>
+  <h1>Thank you.</h1>
+  <p class="lead" id="lead">Your order is confirmed.</p>
+
+  <div class="order" id="orderItems"></div>
+  <div class="o-total"><span class="l">Total paid</span><span class="v" id="orderTotal">€0</span></div>
+
+  <div class="ship" id="shipBlock"></div>
+
+  <div class="actions">
+    <a class="btn" href="index.html#collection">Continue shopping</a>
+    <a class="lnk" href="index.html">Back to home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="tagline">Breathe. Feel. Live.</div>
+  <div class="addr">Rhinofilt GmbH · Berlin</div>
+</footer>
+
+<script>
+var ICONS={
+ breathe:'<svg viewBox="0 0 48 48" fill="none" stroke="#c19a5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24,44 C23,35 24,27 25,15"/><g fill="#c19a5b" stroke="none"><ellipse cx="0" cy="0" rx="3" ry="5.6" transform="translate(17.5,35) rotate(-42)"/><ellipse cx="0" cy="0" rx="3" ry="5.6" transform="translate(30,31) rotate(42)"/><ellipse cx="0" cy="0" rx="2.8" ry="5.2" transform="translate(18.5,27) rotate(-38)"/><ellipse cx="0" cy="0" rx="2.8" ry="5.2" transform="translate(30,23) rotate(38)"/><ellipse cx="0" cy="0" rx="2.5" ry="4.6" transform="translate(20.5,19) rotate(-32)"/><ellipse cx="0" cy="0" rx="2.5" ry="4.6" transform="translate(29,15.5) rotate(32)"/><ellipse cx="25" cy="13" rx="2" ry="4"/></g></svg>',
+ focus:'<svg viewBox="0 0 48 48" fill="none" stroke="#c19a5b" stroke-width="2"><circle cx="24" cy="24" r="15.5"/><circle cx="24" cy="24" r="9.5"/><circle cx="24" cy="24" r="3.6"/><circle cx="24" cy="24" r="1.8" fill="#c19a5b"/></svg>',
+ sleep:'<svg viewBox="0 0 48 48" fill="none" stroke="#c19a5b" stroke-width="2" stroke-linejoin="round"><path d="M30.5,10.5 A15,15 0 1 0 30.5,37.5 A11.5,11.5 0 1 1 30.5,10.5 Z"/></svg>',
+ starter:'<svg viewBox="0 0 48 48" fill="none" stroke="#c19a5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8,15 Q16,9 24,15 T40,15"/><path d="M8,24 Q13,20 18,24 T28,24 T38,24"/><path d="M8,34 C13,34 15,28 21,28 C29,28 31,38 40,34"/></svg>'
+};
+(function(){
+  var o;try{o=JSON.parse(localStorage.getItem('aromaclip_lastorder'))}catch(e){o=null}
+  if(!o){document.getElementById('lead').innerHTML='We couldn’t find a recent order. <a href="index.html#collection" style="color:var(--amber)">Return to the collection</a>.';
+    document.querySelector('.order').style.display='none';document.querySelector('.o-total').style.display='none';return;}
+  document.getElementById('orderNo').textContent='Order '+o.number;
+  document.getElementById('lead').innerHTML='A receipt is on its way to <b>'+o.email+'</b>. We’ll email you again when it ships.';
+  var html='';(o.items||[]).forEach(function(it){
+    html+='<div class="o-row"><span>'+(ICONS[it.id]||'')+'</span>'
+      +'<div class="o-name">'+it.name+'<span>Qty '+it.qty+'</span></div>'
+      +'<div class="o-line">€'+(it.price*it.qty)+'</div></div>';});
+  document.getElementById('orderItems').innerHTML=html;
+  document.getElementById('orderTotal').textContent='€'+o.total;
+  document.getElementById('shipBlock').innerHTML='<span class="lbl">Shipping to</span>'+o.name+'<br>'+o.address;
+})();
+</script>
+</body>
+</html>
